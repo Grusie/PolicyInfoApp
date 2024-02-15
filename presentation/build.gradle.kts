@@ -1,22 +1,17 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace = AppConfig.NAME_SPACE
+    namespace = "com.grusie.presentation"
     compileSdk = AppConfig.COMPILE_SDK
 
     defaultConfig {
-        applicationId = "com.grusie.policyinfo"
         minSdk = AppConfig.MIN_SDK
-        targetSdk = AppConfig.TARGET_SDK
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = AppConfig.TEST_INSTRUMENTATION_RUNNER
+        consumerProguardFiles(AppConfig.CONSUMER)
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -54,24 +49,26 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
-    implementation(project(":presentation"))
 
     implementation(KTX.CORE_KTX)
-    implementation(KTX.LIFECYCLE_RUNTIME_KTX)
-    implementation(AndroidX.ACTIVITY_COMPOSE)
-    implementation(platform(AndroidX.COMPOSE_BOM))
+    implementation(AndroidX.APPCOMPAT)
+    implementation(Google.GOOGLE_MATERIAL)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     testImplementation(Test.JUNIT)
     androidTestImplementation(Test.ANDROID_JUNIT)
     androidTestImplementation(Test.ESPRESSO_CORE)
-    androidTestImplementation(platform(AndroidX.COMPOSE_BOM))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    implementation(Google.HILT_ANDROID)
-    kapt          (Google.HILT_ANDROID_COMPILER)
 }

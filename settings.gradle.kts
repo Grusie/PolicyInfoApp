@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "PolicyInfo"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":presentation")
+include("android-script-project")
