@@ -1,6 +1,11 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -12,6 +17,8 @@ android {
 
         testInstrumentationRunner = AppConfig.TEST_INSTRUMENTATION_RUNNER
         consumerProguardFiles(AppConfig.CONSUMER)
+
+        buildConfigField("String", "POLICY_API_KEY", getApiKey("policy_api_key"))
     }
 
     buildTypes {
@@ -23,6 +30,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -30,6 +42,10 @@ android {
     kotlinOptions {
         jvmTarget = AppConfig.JVM_TARGET
     }
+}
+
+fun getApiKey(propertyKey:String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {
@@ -41,5 +57,17 @@ dependencies {
     testImplementation(Test.JUNIT)
     androidTestImplementation(Test.ANDROID_JUNIT)
     androidTestImplementation(Test.ESPRESSO_CORE)
+
+    implementation(Google.HILT_ANDROID)
+    kapt          (Google.HILT_ANDROID_COMPILER)
+
     implementation(Libraries.RETROFIT)
+    implementation(Libraries.OKHTTP)
+    implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
+    implementation(Libraries.TIKXML_CONVERTER)
+    implementation(Libraries.TIKXML_RETROFIT_CONVERTER)
+    implementation(Libraries.TIKXML_ANNOTATION)
+    implementation(Google.GOOGLE_GUAVA_ERROR)
+
+    kapt(Libraries.TIKXML_PROCESSOR)
 }

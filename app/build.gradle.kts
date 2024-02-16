@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -74,4 +76,14 @@ dependencies {
 
     implementation(Google.HILT_ANDROID)
     kapt          (Google.HILT_ANDROID_COMPILER)
+
+    implementation(Libraries.RETROFIT)
+    implementation(Libraries.OKHTTP)
+    implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
+    implementation(Libraries.TIKXML_CONVERTER)
+    implementation(Libraries.TIKXML_RETROFIT_CONVERTER)
+    implementation(Libraries.TIKXML_ANNOTATION)
+    implementation(Google.GOOGLE_GUAVA_ERROR)
+
+    kapt(Libraries.TIKXML_PROCESSOR)
 }
