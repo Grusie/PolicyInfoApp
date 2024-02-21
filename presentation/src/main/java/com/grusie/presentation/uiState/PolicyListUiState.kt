@@ -1,4 +1,4 @@
-package com.grusie.presentation.ui.uiState
+package com.grusie.presentation.uiState
 
 import com.grusie.domain.model.PolicySimple
 
@@ -7,5 +7,5 @@ sealed class PolicyListUiState {
     object Loading : PolicyListUiState()
     data class Success(val policySimpleList: List<PolicySimple>) : PolicyListUiState()
 
-    data class Error(val errorMsg: String) : PolicyListUiState()
+    data class Error(val error: Exception) : PolicyListUiState()
 }

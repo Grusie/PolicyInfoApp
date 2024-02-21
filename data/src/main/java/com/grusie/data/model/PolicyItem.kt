@@ -16,7 +16,7 @@ data class PolicyItem(
     @PropertyElement(name = "polyBizSjnm")     //정책명
     val name: String,
     @PropertyElement(name = "polyItcnCn")      //정책소개
-    val title: String,
+    val subInfo: String,
     @PropertyElement(name = "sporCn")          //지원내용
     val info: String,
     @PropertyElement(name = "sporScvl")        //지원규모
@@ -78,7 +78,7 @@ fun PolicyItem.toPolicyDetail(): PolicyDetail {
         id = id,
         agencyType = agencyType,
         name = name,
-        title = title,
+        subInfo = subInfo,
         info = info,
         scale = scale,
         period = period,
@@ -98,10 +98,11 @@ fun PolicyItem.toPolicyDetail(): PolicyDetail {
         referUrl1 = referUrl1,
         referUrl2 = referUrl1,
         hostDepartment = hostDepartment,
-        mangerName = managerName,
+        managerName = managerName,
         managerNumber = managerNumber,
         organization = organization,
         orgManagerName = orgManagerName,
+        orgManageNumber = orgManagerNum,
         etc = etc,
         policyKindCode = policyKindCode
     )
@@ -109,12 +110,12 @@ fun PolicyItem.toPolicyDetail(): PolicyDetail {
 
 fun PolicyItem.toPolicySimple(): PolicySimple {
     return PolicySimple(
-        policyId = id,
-        policyName = name,
-        policyTitle = title,
-        policyPeriod = period,
+        id = id,
+        name = name,
+        subInfo = subInfo,
+        period = period,
         ageInfo = ageInfo,
-        policyKind = kindInfo,
+        kindInfo = kindInfo,
         organization = organization
     )
 }

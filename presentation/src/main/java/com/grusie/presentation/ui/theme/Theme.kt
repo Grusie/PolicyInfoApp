@@ -1,4 +1,4 @@
-package com.grusie.presentation.ui.ui.theme
+package com.grusie.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,7 +1,6 @@
 package com.grusie.policyinfo.di
 
 import android.app.Application
-import android.util.Log
 import com.grusie.data.service.PolicyService
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
@@ -14,7 +13,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -33,7 +31,7 @@ internal object ApiModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(cache:Cache) : OkHttpClient {
+    fun provideHttpClient(cache: Cache): OkHttpClient {
         return OkHttpClient.Builder().apply {
             cache(cache)
             connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
@@ -52,14 +50,18 @@ internal object ApiModule {
     fun providePolicyRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(POLICY_BASE_URL)
-            .addConverterFactory(TikXmlConverterFactory.create(TikXml.Builder().exceptionOnUnreadXml(false).build()))
+            .addConverterFactory(
+                TikXmlConverterFactory.create(
+                    TikXml.Builder().exceptionOnUnreadXml(false).build()
+                )
+            )
             .client(client)
             .build()
     }
 
     @Provides
     @Singleton
-    fun providePolicyService(retrofit: Retrofit) : PolicyService {
+    fun providePolicyService(retrofit: Retrofit): PolicyService {
         return retrofit.create(PolicyService::class.java)
     }
 }

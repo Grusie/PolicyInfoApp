@@ -1,6 +1,5 @@
 package com.grusie.data.repositoryImpl
 
-import com.grusie.data.BuildConfig
 import com.grusie.data.model.toPolicyDetail
 import com.grusie.data.model.toPolicySimple
 import com.grusie.data.source.PolicyRemoteSource
@@ -17,9 +16,9 @@ class PolicyRepositoryImpl @Inject constructor(private val policyRemoteSource: P
         page: Int
     ): List<PolicySimple> {
         return policyRemoteSource.getPolicyList(
-            apiKey = BuildConfig.POLICY_API_KEY,
-            display,
-            page
+            apiKey = apiKey,
+            display = display,
+            page = page
         ).youthPolicy.map { it.toPolicySimple() }
     }
 
@@ -30,6 +29,6 @@ class PolicyRepositoryImpl @Inject constructor(private val policyRemoteSource: P
         return policyRemoteSource.getPolicyDetail(
             apiKey = apiKey,
             policyId = policyId,
-        ).toPolicyDetail()
+        ).youthPolicy[0].toPolicyDetail()
     }
 }

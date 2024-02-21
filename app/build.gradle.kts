@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -75,14 +73,19 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation(Google.HILT_ANDROID)
-    kapt          (Google.HILT_ANDROID_COMPILER)
+    kapt(Google.HILT_ANDROID_COMPILER)
 
+    //Retrofit
     implementation(Libraries.RETROFIT)
     implementation(Libraries.OKHTTP)
     implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
+
+    //XML Parser
     implementation(Libraries.TIKXML_CONVERTER)
     implementation(Libraries.TIKXML_RETROFIT_CONVERTER)
     implementation(Libraries.TIKXML_ANNOTATION)
+
+    //GOOGLE ERROR
     implementation(Google.GOOGLE_GUAVA_ERROR)
 
     kapt(Libraries.TIKXML_PROCESSOR)

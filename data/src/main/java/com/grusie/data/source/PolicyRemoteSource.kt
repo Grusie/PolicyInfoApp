@@ -1,12 +1,7 @@
 package com.grusie.data.source
 
-import android.util.Log
-import com.grusie.data.model.PolicyItem
 import com.grusie.data.model.PolicyList
 import com.grusie.data.service.PolicyService
-import com.grusie.domain.model.PolicyDetail
-import com.grusie.domain.model.PolicySimple
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface PolicyRemoteSource {
@@ -21,7 +16,7 @@ interface PolicyRemoteSource {
         policyId: String,
         display: Int = 10,
         page: Int = 1
-    ): PolicyItem
+    ): PolicyList
 }
 
 class PolicyRemoteSourceImpl @Inject constructor(
@@ -40,7 +35,7 @@ class PolicyRemoteSourceImpl @Inject constructor(
         policyId: String,
         display: Int,
         page: Int
-    ): PolicyItem {
+    ): PolicyList {
         return policyService.getPolicyDetail(
             apiKey = apiKey,
             policyId = policyId,

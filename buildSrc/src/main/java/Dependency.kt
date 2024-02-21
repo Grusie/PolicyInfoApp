@@ -17,12 +17,17 @@ object Versions {
     const val RETROFIT = "2.9.0"
     const val OKHTTP = "4.12.0"
     const val TIKXML = "0.8.13"
+
+    const val COMPOSE_NAVIGATION = "2.5.3"
 }
 
 object AndroidX {
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}"
     const val COMPOSE_BOM = "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}"
     const val APPCOMPAT = "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
+
+
+    const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
 }
 
 object KTX {
