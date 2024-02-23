@@ -18,7 +18,11 @@ object Versions {
     const val OKHTTP = "4.12.0"
     const val TIKXML = "0.8.13"
 
+    const val ROOM = "2.6.1"
+
     const val COMPOSE_NAVIGATION = "2.5.3"
+    const val PAGING = "3.1.1"
+    const val PAGING_COMPOSE = "1.0.0-alpha18"
 }
 
 object AndroidX {
@@ -26,8 +30,14 @@ object AndroidX {
     const val COMPOSE_BOM = "androidx.compose:compose-bom:${Versions.COMPOSE_BOM}"
     const val APPCOMPAT = "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
 
+    const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
+    const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+    const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
+    const val ROOM_PAGING = "androidx.room:room-paging:${Versions.ROOM}"
 
     const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
+    const val PAGING = "androidx.paging:paging-common:${Versions.PAGING}"
+    const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
 }
 
 object KTX {

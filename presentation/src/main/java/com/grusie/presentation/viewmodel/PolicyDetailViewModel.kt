@@ -2,7 +2,6 @@ package com.grusie.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grusie.data.BuildConfig
 import com.grusie.domain.usecase.PolicyUseCases
 import com.grusie.presentation.uiState.PolicyDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,12 +20,12 @@ class PolicyDetailViewModel @Inject constructor(private val policyUseCases: Poli
 
     fun getPolicyDetail(policyId: String) {
         viewModelScope.launch {
+            _policyDetailUiState.emit(PolicyDetailUiState.Loading)
             try {
-                val policyDetail =
-                    policyUseCases.getPolicyDetailUseCase(BuildConfig.POLICY_API_KEY, policyId)
-                _policyDetailUiState.emit(
-                    PolicyDetailUiState.Success(policyDetail)
-                )
+                policyUseCases.getPolicyDetailUseCase(policyId).collect {
+                    _policyDetailUiState.emit(PolicyDetailUiState.Success(it))
+                }
+
             } catch (e: Exception) {
                 _policyDetailUiState.emit(PolicyDetailUiState.Error(e))
             }

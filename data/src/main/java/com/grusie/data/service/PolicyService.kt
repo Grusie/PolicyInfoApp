@@ -9,16 +9,7 @@ interface PolicyService {
     suspend fun getPolicyList(
         @Query("openApiVlak")
         apiKey: String,
-        @Query("display") display: Int,
-        @Query("pageIndex") page: Int
-    ): PolicyList
-
-    @GET("youthPlcyList.do")
-    suspend fun getPolicyDetail(
-        @Query("openApiVlak")
-        apiKey: String,
         @Query("display") display: Int = 10,
-        @Query("pageIndex") page: Int = 1,
-        @Query("srchPolicyId") policyId: String
+        @Query("pageIndex") page: Int = 1
     ): PolicyList
 }

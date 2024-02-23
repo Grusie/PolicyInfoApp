@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -38,6 +37,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
 import com.grusie.domain.model.PolicySimple
 import com.grusie.presentation.R
 import com.grusie.presentation.navigation.Screen
@@ -47,14 +49,32 @@ import com.grusie.presentation.util.TextUtils
  * 메인 페이지 간단한 정책 정보 컴포넌트들
  **/
 @Composable
-fun PolicySimpleList(policyList: List<PolicySimple>, navController: NavHostController) {
+fun PolicySimpleList(
+    policyList: LazyPagingItems<PolicySimple>,
+    navController: NavHostController,
+    loading: (Boolean) -> Unit
+) {
+    /*val scrollState = rememberLazyListState()*/
     LazyColumn(
-        contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.margin_default), vertical = 4.dp)
+        //state = scrollState,
+        contentPadding = PaddingValues(
+            horizontal = dimensionResource(id = R.dimen.margin_default),
+            vertical = 4.dp
+        )
     ) {
         items(items = policyList, key = { policy ->
             policy.id
         }) { policy ->
-            PolicySimpleItem(policy = policy, navController = navController)
+            if (policy != null) {
+                PolicySimpleItem(policy = policy, navController = navController)
+            }
+        }
+        when {
+            policyList.loadState.refresh is LoadState.Loading || policyList.loadState.append is LoadState.Loading -> {
+                loading(true)
+            }
+
+            else -> loading(false)
         }
     }
 }
@@ -71,7 +91,10 @@ fun PolicySimpleItem(policy: PolicySimple, navController: NavController) {
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.margin_default), vertical = dimensionResource(id = R.dimen.margin_default))
+            modifier = Modifier.padding(
+                horizontal = dimensionResource(id = R.dimen.margin_default),
+                vertical = dimensionResource(id = R.dimen.margin_default)
+            )
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),

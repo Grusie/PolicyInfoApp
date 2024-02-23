@@ -86,4 +86,8 @@ dependencies {
 
     //COMPOSE Navigation
     implementation(AndroidX.COMPOSE_NAVIGATION)
+
+    //Paging3
+    implementation(AndroidX.PAGING)
+    implementation(AndroidX.PAGING_COMPOSE)
 }

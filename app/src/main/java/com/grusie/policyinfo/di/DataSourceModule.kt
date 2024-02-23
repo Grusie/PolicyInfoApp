@@ -1,5 +1,8 @@
 package com.grusie.policyinfo.di
 
+import com.grusie.data.db.PolicyInfoDao
+import com.grusie.data.source.PolicyLocalDataSource
+import com.grusie.data.source.PolicyLocalDataSourceImpl
 import com.grusie.data.source.PolicyRemoteSource
 import com.grusie.data.source.PolicyRemoteSourceImpl
 import dagger.Module
@@ -16,4 +19,6 @@ object DataSourceModule {
     fun providesPolicyRemoteSource(source : PolicyRemoteSourceImpl): PolicyRemoteSource {
         return source
     }
+    @Provides
+    fun provideLocalDataSource(policyInfoDao: PolicyInfoDao): PolicyLocalDataSource = PolicyLocalDataSourceImpl(policyInfoDao = policyInfoDao)
 }

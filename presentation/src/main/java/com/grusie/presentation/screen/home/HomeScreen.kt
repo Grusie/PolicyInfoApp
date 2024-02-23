@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,7 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.grusie.presentation.R
+import com.grusie.presentation.components.EmptyView
 import com.grusie.presentation.components.Progress
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.navigation.Screen
@@ -39,17 +42,25 @@ import com.grusie.presentation.viewmodel.PolicyListViewModel
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: PolicyListViewModel = hiltViewModel()) {
     val context = LocalContext.current
+    val policyList = viewModel.policyList.collectAsLazyPagingItems()
+    val policyListUiState = viewModel.policyListUiState.collectAsState().value
 
     Scaffold(topBar = { HomeTopBar(navController = navController) }) {
         Box(modifier = Modifier.padding(it)) {
-            when (val policyListUiState = viewModel.policyListUiState.collectAsState().value) {
+            PolicySimpleList(
+                policyList = policyList,
+                navController = navController,
+                loading = { loading ->
+                    viewModel.setPolicyUiState(if (loading) PolicyListUiState.Loading else PolicyListUiState.Success)
+                }
+            )
+
+            when (policyListUiState) {
                 is PolicyListUiState.Loading -> {
                     Progress()
                 }
 
                 is PolicyListUiState.Success -> {
-                    val policyList = policyListUiState.policySimpleList
-                    PolicySimpleList(policyList = policyList, navController = navController)
                 }
 
                 is PolicyListUiState.Error -> {
@@ -63,8 +74,8 @@ fun HomeScreen(navController: NavHostController, viewModel: PolicyListViewModel 
                     )
                 }
 
-                else -> {
-
+                is PolicyListUiState.Empty -> {
+                    EmptyView()
                 }
             }
         }

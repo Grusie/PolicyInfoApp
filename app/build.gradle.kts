@@ -85,6 +85,11 @@ dependencies {
     implementation(Libraries.TIKXML_RETROFIT_CONVERTER)
     implementation(Libraries.TIKXML_ANNOTATION)
 
+    //Room DB
+    implementation(AndroidX.ROOM_RUNTIME)
+    kapt(AndroidX.ROOM_COMPILER)
+    implementation(AndroidX.ROOM_KTX)
+
     //GOOGLE ERROR
     implementation(Google.GOOGLE_GUAVA_ERROR)
 

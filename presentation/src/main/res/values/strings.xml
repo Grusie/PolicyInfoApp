@@ -47,4 +47,6 @@
     <string name="str_policy_kind_edu">교육 분야</string>
     <string name="str_policy_kind_culture">복지,문화 분야</string>
     <string name="str_policy_kind_participation">참여,권리 분야</string>
+
+    <string name="str_empty_list">해당하는 정책이 없습니다.</string>
 </resources>

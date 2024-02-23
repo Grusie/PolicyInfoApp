@@ -1,12 +1,16 @@
 package com.grusie.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.grusie.domain.model.PolicyDetail
 import com.grusie.domain.model.PolicySimple
 import com.tickaroo.tikxml.annotation.PropertyElement
 import com.tickaroo.tikxml.annotation.Xml
 
 @Xml(name = "youthPolicy")
+@Entity(tableName = "policyInfo")
 data class PolicyItem(
+    @PrimaryKey(autoGenerate = false)
     @PropertyElement(name = "bizId")           //정책 ID
     val id: String,
     @PropertyElement(name = "polyBizSecd")     //정책일련번호

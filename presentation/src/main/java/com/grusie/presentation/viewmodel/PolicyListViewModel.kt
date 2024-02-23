@@ -1,11 +1,15 @@
 package com.grusie.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grusie.data.BuildConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.grusie.domain.model.PolicySimple
 import com.grusie.domain.usecase.PolicyUseCases
 import com.grusie.presentation.uiState.PolicyListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -18,23 +22,32 @@ class PolicyListViewModel @Inject constructor(private val policyUseCases: Policy
         MutableStateFlow(PolicyListUiState.Loading)
     val policyListUiState: StateFlow<PolicyListUiState> = _policyListUiState
 
+    private val _policyList: MutableStateFlow<PagingData<PolicySimple>> =
+        MutableStateFlow(PagingData.empty())
+    val policyList: Flow<PagingData<PolicySimple>> = _policyList
+
     init {
         getPolicyList()
     }
 
-    fun getPolicyList(display: Int = 10, page: Int = 1) {
+    private fun getPolicyList() {
         viewModelScope.launch {
+            setPolicyUiState(PolicyListUiState.Loading)
             try {
-                val policySimpleList =
-                    policyUseCases.getPolicyListUseCase(BuildConfig.POLICY_API_KEY, display, page)
-                _policyListUiState.emit(
-                    if (policySimpleList.isNotEmpty()) PolicyListUiState.Success(
-                        policySimpleList
-                    ) else PolicyListUiState.Empty
-                )
+                policyUseCases.getPolicyListUseCase().cachedIn(viewModelScope)
+                    .collect { pagingData ->
+                        _policyList.emit(pagingData)
+                        setPolicyUiState(PolicyListUiState.Success)
+                    }
             } catch (e: Exception) {
-                _policyListUiState.emit(PolicyListUiState.Error(e))
+                setPolicyUiState(PolicyListUiState.Error(e))
             }
+        }
+    }
+
+    fun setPolicyUiState(uiState: PolicyListUiState) {
+        viewModelScope.launch {
+            _policyListUiState.emit(uiState)
         }
     }
 }

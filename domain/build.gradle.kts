@@ -40,4 +40,6 @@ dependencies {
     testImplementation(Test.JUNIT)
     androidTestImplementation(Test.ANDROID_JUNIT)
     androidTestImplementation(Test.ESPRESSO_CORE)
+    //Paging3
+    implementation(AndroidX.PAGING)
 }

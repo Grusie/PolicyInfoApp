@@ -73,5 +73,14 @@ dependencies {
     //GOOGLE ERROR
     implementation(Google.GOOGLE_GUAVA_ERROR)
 
+    //Room DB
+    implementation(AndroidX.ROOM_RUNTIME)
+    kapt(AndroidX.ROOM_COMPILER)
+    implementation(AndroidX.ROOM_KTX)
+    implementation(AndroidX.ROOM_PAGING)
+
+    //Paging3
+    implementation(AndroidX.PAGING)
+
     kapt(Libraries.TIKXML_PROCESSOR)
 }

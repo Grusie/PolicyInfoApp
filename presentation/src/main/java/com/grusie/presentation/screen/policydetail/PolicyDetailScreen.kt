@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -16,9 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.grusie.presentation.R
-import com.grusie.presentation.components.Progress
+import com.grusie.presentation.components.EmptyView
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.uiState.PolicyDetailUiState
+import com.grusie.presentation.uiState.PolicyListUiState
 import com.grusie.presentation.util.TextUtils
 import com.grusie.presentation.viewmodel.PolicyDetailViewModel
 
@@ -60,7 +62,7 @@ fun PolicyDetailScreen(
         }
 
         is PolicyDetailUiState.Loading -> {
-            Progress()
+            CircularProgressIndicator()
         }
 
         is PolicyDetailUiState.Error -> {
@@ -77,8 +79,8 @@ fun PolicyDetailScreen(
             )
         }
 
-        else -> {
-
+        is PolicyDetailUiState.Empty -> {
+            EmptyView()
         }
     }
 }
