@@ -20,9 +20,12 @@ object Versions {
 
     const val ROOM = "2.6.1"
 
-    const val COMPOSE_NAVIGATION = "2.5.3"
+    const val COMPOSE_NAVIGATION = "2.7.7"
     const val PAGING = "3.1.1"
     const val PAGING_COMPOSE = "1.0.0-alpha18"
+    const val COMPOSE_MATERIAL = "1.6.2"
+    const val NAVIGATION_ANIMATION = "0.30.0"
+    const val COMPOSE_SWIPE = "0.27.0"
 }
 
 object AndroidX {
@@ -38,6 +41,7 @@ object AndroidX {
     const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:${Versions.COMPOSE_NAVIGATION}"
     const val PAGING = "androidx.paging:paging-common:${Versions.PAGING}"
     const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
+    const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE_MATERIAL}"
 }
 
 object KTX {
@@ -54,6 +58,8 @@ object Google {
     const val HILT_COMPOSE  = "androidx.hilt:hilt-navigation-compose:${Versions.HILT_COMPOSE}"
 
     const val GOOGLE_GUAVA_ERROR = "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
+    const val NAVIGATION_ANIMATION = "com.google.accompanist:accompanist-navigation-animation:${Versions.NAVIGATION_ANIMATION}"
+    const val COMPOSE_SWIPE = "com.google.accompanist:accompanist-swiperefresh:${Versions.COMPOSE_SWIPE}"
 }
 
 object Libraries {

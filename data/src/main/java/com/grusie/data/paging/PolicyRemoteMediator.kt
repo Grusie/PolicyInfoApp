@@ -1,5 +1,6 @@
 package com.grusie.data.paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -46,9 +47,10 @@ class PolicyRemoteMediator(
                     nextPage
                 }
             }
+            Log.d("confirm page", " $page, $loadType")
             val policyList =
                 policyService.getPolicyList(apiKey = BuildConfig.POLICY_API_KEY, page = page)
-            var endOfPaginationReached = policyList.youthPolicy.isEmpty()
+            val endOfPaginationReached = policyList.youthPolicy.isNullOrEmpty()
 
             policyInfoDB.withTransaction {
                 if (loadType == LoadType.REFRESH) {
@@ -63,18 +65,20 @@ class PolicyRemoteMediator(
                     prevPage = if (pageIndex <= 1) null else pageIndex - 1
                 }
 
-                val keys = policyList.youthPolicy.map { policyItem ->
+                val keys = policyList.youthPolicy?.map { policyItem ->
                     PolicyRemoteKeys(
                         id = policyItem.id,
                         prePage = prevPage,
                         nextPage = nextPage
                     )
                 }
-                policyRemoteKeysDao.addPolicyRemoteKeys(policyRemoteKeys = keys)
-                policyDao.addPolicyInfo(policyList = policyList.youthPolicy)
+                keys?.let { policyRemoteKeysDao.addPolicyRemoteKeys(policyRemoteKeys = it)}
+                policyList.youthPolicy?.let { policyDao.addPolicyInfo(policyList = it)}
             }
+            Log.d("confirm page success", "$endOfPaginationReached")
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (e: Exception) {
+            Log.d("confirm page error", "${e.message}")
             return MediatorResult.Error(e)
         }
     }

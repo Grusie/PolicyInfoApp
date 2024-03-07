@@ -15,8 +15,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.grusie.presentation.R
 import com.grusie.presentation.components.EmptyView
 import com.grusie.presentation.components.Progress
@@ -40,42 +42,52 @@ import com.grusie.presentation.viewmodel.PolicyListViewModel
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController, viewModel: PolicyListViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavHostController,
+    viewModel: PolicyListViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     val policyList = viewModel.policyList.collectAsLazyPagingItems()
     val policyListUiState = viewModel.policyListUiState.collectAsState().value
+    val isLoading by viewModel.isLoading.collectAsState()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
 
     Scaffold(topBar = { HomeTopBar(navController = navController) }) {
-        Box(modifier = Modifier.padding(it)) {
-            PolicySimpleList(
-                policyList = policyList,
-                navController = navController,
-                loading = { loading ->
-                    viewModel.setPolicyUiState(if (loading) PolicyListUiState.Loading else PolicyListUiState.Success)
-                }
-            )
+        SwipeRefresh(state = swipeRefreshState, onRefresh = {
+            viewModel.loading()
+        }, modifier = Modifier.padding(it)) {
+            Box() {
+                PolicySimpleList(
+                    policyList = policyList,
+                    navController = navController,
+                    loading = { loading ->
+                        viewModel.setPolicyUiState(if (loading) PolicyListUiState.Loading else PolicyListUiState.Success)
+                    }
+                )
 
-            when (policyListUiState) {
-                is PolicyListUiState.Loading -> {
-                    Progress()
-                }
+                when (policyListUiState) {
+                    is PolicyListUiState.Loading -> {
+                        Progress()
+                    }
 
-                is PolicyListUiState.Success -> {
-                }
+                    is PolicyListUiState.Success -> {
+                    }
 
-                is PolicyListUiState.Error -> {
-                    SingleAlertDialog(
-                        confirm = false,
-                        title = stringResource(id = R.string.str_title_error),
-                        content = TextUtils.getErrorMsg(
-                            context,
-                            policyListUiState.error
+                    is PolicyListUiState.Error -> {
+                        SingleAlertDialog(
+                            confirm = false,
+                            title = stringResource(id = R.string.str_title_error),
+                            content = TextUtils.getErrorMsg(
+                                context,
+                                policyListUiState.error
+                            )
                         )
-                    )
-                }
+                    }
 
-                is PolicyListUiState.Empty -> {
-                    EmptyView()
+                    is PolicyListUiState.Empty -> {
+                        EmptyView()
+                    }
                 }
             }
         }

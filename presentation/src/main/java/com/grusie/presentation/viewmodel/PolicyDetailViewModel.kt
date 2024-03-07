@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PolicyDetailViewModel @Inject constructor(private val policyUseCases: PolicyUseCases) :
-    ViewModel() {
+    BaseViewModel() {
     private val _policyDetailUiState: MutableStateFlow<PolicyDetailUiState> = MutableStateFlow(
         PolicyDetailUiState.Loading
     )

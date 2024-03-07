@@ -11,5 +11,5 @@ data class PolicyList(
     @PropertyElement
     val totalCnt: Int,
     @Element
-    val youthPolicy: List<PolicyItem>
+    val youthPolicy: List<PolicyItem>?
 )

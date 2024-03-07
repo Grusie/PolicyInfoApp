@@ -20,7 +20,6 @@ import com.grusie.presentation.R
 import com.grusie.presentation.components.EmptyView
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.uiState.PolicyDetailUiState
-import com.grusie.presentation.uiState.PolicyListUiState
 import com.grusie.presentation.util.TextUtils
 import com.grusie.presentation.viewmodel.PolicyDetailViewModel
 
@@ -33,7 +32,8 @@ import com.grusie.presentation.viewmodel.PolicyDetailViewModel
 fun PolicyDetailScreen(
     policyId: String,
     navController: NavHostController,
-    viewModel: PolicyDetailViewModel = hiltViewModel()
+    viewModel: PolicyDetailViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 

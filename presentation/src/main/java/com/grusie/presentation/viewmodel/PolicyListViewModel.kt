@@ -9,6 +9,7 @@ import com.grusie.domain.model.PolicySimple
 import com.grusie.domain.usecase.PolicyUseCases
 import com.grusie.presentation.uiState.PolicyListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PolicyListViewModel @Inject constructor(private val policyUseCases: PolicyUseCases) :
-    ViewModel() {
+    BaseViewModel() {
     private val _policyListUiState: MutableStateFlow<PolicyListUiState> =
         MutableStateFlow(PolicyListUiState.Loading)
     val policyListUiState: StateFlow<PolicyListUiState> = _policyListUiState
@@ -49,6 +50,11 @@ class PolicyListViewModel @Inject constructor(private val policyUseCases: Policy
         viewModelScope.launch {
             _policyListUiState.emit(uiState)
         }
+    }
+
+    override fun loading(): Job {
+        getPolicyList()
+        return super.loading()
     }
 }
 

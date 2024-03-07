@@ -27,7 +27,7 @@ class PolicyRemoteSourceImpl @Inject constructor(
     override suspend fun getPolicyList(): Flow<PagingData<PolicyItem>> {
         val pagingSourceFactory = { policyInfoDao.getAllPolicies() }
         return Pager(
-            config = PagingConfig(pageSize = 10),
+            config = PagingConfig(pageSize = 10, initialLoadSize = 10),
             remoteMediator = PolicyRemoteMediator(
                 policyService,
                 policyInfoDB

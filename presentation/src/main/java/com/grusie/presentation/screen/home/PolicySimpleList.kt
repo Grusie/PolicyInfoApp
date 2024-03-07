@@ -3,6 +3,7 @@ package com.grusie.presentation.screen.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -43,6 +45,7 @@ import androidx.paging.compose.items
 import com.grusie.domain.model.PolicySimple
 import com.grusie.presentation.R
 import com.grusie.presentation.navigation.Screen
+import com.grusie.presentation.ui.theme.Gray900
 import com.grusie.presentation.util.TextUtils
 
 /**
@@ -74,7 +77,65 @@ fun PolicySimpleList(
                 loading(true)
             }
 
+            policyList.loadState.append is LoadState.Error -> {
+                loading(false)
+                item {
+                    LoadStateFooter(
+                        loadState = policyList.loadState.append,
+                        onRetryClick = { policyList.retry() },
+                    )
+                }
+            }
+
             else -> loading(false)
+        }
+    }
+}
+
+@Composable
+fun LoadStateFooter(
+    modifier: Modifier = Modifier,
+    loadState: LoadState,
+    onRetryClick: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+    ) {
+        if(loadState is LoadState.Error){
+            LoadErrorScreen(onRetryClick = onRetryClick)
+        }
+    }
+}
+
+@Composable
+fun LoadErrorScreen(
+    modifier: Modifier = Modifier,
+    onRetryClick: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(id = R.string.error_msg),
+                color = Gray900,
+                fontSize = 16.sp,
+                modifier = Modifier.align(Alignment.CenterVertically),
+            )
+            Button(
+                onClick = onRetryClick,
+            ) {
+                Text(text = stringResource(id = R.string.retry))
+            }
         }
     }
 }

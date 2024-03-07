@@ -8,5 +8,6 @@ sealed class Screen(val route: String) {
 
     object MyPage : Screen("my_page")
 
+    object Scrap : Screen("scrap")
     object Search : Screen("search_screen")
 }

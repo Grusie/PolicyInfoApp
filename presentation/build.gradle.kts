@@ -86,6 +86,13 @@ dependencies {
 
     //COMPOSE Navigation
     implementation(AndroidX.COMPOSE_NAVIGATION)
+    implementation(AndroidX.COMPOSE_MATERIAL)
+
+    //COMPOSE AnimatedNavHost
+    implementation(Google.NAVIGATION_ANIMATION)
+
+    //COMPOSE Swipe
+    implementation(Google.COMPOSE_SWIPE)
 
     //Paging3
     implementation(AndroidX.PAGING)
