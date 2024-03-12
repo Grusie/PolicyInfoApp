@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,6 +48,7 @@ import androidx.paging.compose.items
 import com.grusie.domain.model.PolicySimple
 import com.grusie.presentation.R
 import com.grusie.presentation.components.LoadStateFooter
+import com.grusie.presentation.components.ScrollTopBtn
 import com.grusie.presentation.navigation.Screen
 import com.grusie.presentation.util.TextUtils
 import kotlinx.coroutines.launch
@@ -61,45 +64,54 @@ fun PolicySimpleList(
 ) {
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    LazyColumn(
-        state = scrollState,
-        contentPadding = PaddingValues(
-            horizontal = dimensionResource(id = R.dimen.margin_default),
-            vertical = 4.dp
-        )
-    ) {
-        items(items = policyList, key = { policy ->
-            policy.id
-        }) { policy ->
-            if (policy != null) {
-                PolicySimpleItem(policy = policy, navController = navController)
-            }
-        }
-        Log.d("confirm loadState : ", "${policyList.loadState}")
-        when {
-            policyList.loadState.refresh is LoadState.Loading ->{
-                coroutineScope.launch {
-                    scrollState.scrollToItem(0)
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            state = scrollState,
+            contentPadding = PaddingValues(
+                horizontal = dimensionResource(id = R.dimen.margin_default),
+                vertical = 4.dp
+            )
+        ) {
+            items(items = policyList, key = { policy ->
+                policy.id
+            }) { policy ->
+                if (policy != null) {
+                    PolicySimpleItem(policy = policy, navController = navController)
                 }
             }
-            policyList.loadState.append is LoadState.Loading || policyList.loadState.prepend is LoadState.Loading -> {
-                loading(true)
-            }
-
-            policyList.loadState.append is LoadState.Error || policyList.loadState.prepend is LoadState.Error -> {
-                loading(false)
-                item {
-                    LoadStateFooter(
-                        loadState = policyList.loadState.append,
-                        onRetryClick = { policyList.retry() },
-                    )
+            Log.d("confirm loadState : ", "${policyList.loadState}")
+            when {
+                policyList.loadState.refresh is LoadState.Loading -> {
+                    coroutineScope.launch {
+                        scrollState.scrollToItem(0)
+                    }
                 }
-            }
 
-            else -> loading(false)
+                policyList.loadState.append is LoadState.Loading || policyList.loadState.prepend is LoadState.Loading -> {
+                    loading(true)
+                }
+
+                policyList.loadState.append is LoadState.Error || policyList.loadState.prepend is LoadState.Error -> {
+                    loading(false)
+                    item {
+                        LoadStateFooter(
+                            loadState = policyList.loadState.append,
+                            onRetryClick = { policyList.retry() },
+                        )
+                    }
+                }
+
+                else -> loading(false)
+            }
         }
+
+        ScrollTopBtn(modifier = Modifier.align(Alignment.BottomEnd), onClick = {
+            coroutineScope.launch {
+                scrollState.animateScrollToItem(0)
+            }
+        })
     }
-
 }
 
 @Composable

@@ -92,7 +92,7 @@ fun SearchScreen(
                             initList = true
                         } else {
                             initList = false
-                            if (policyListUiState !is PolicySearchUiState.Search) viewModel.setPolicyUiState(
+                            viewModel.setPolicyUiState(
                                 PolicySearchUiState.Empty
                             )
                         }

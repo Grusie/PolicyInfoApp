@@ -38,7 +38,6 @@ class PolicyListViewModel @Inject constructor(private val policyUseCases: Policy
                 policyUseCases.getPolicyListUseCase().cachedIn(viewModelScope)
                     .collect { pagingData ->
                         _policyList.emit(pagingData)
-                        setPolicyUiState(PolicyListUiState.Success)
                     }
             } catch (e: Exception) {
                 setPolicyUiState(PolicyListUiState.Error(e))
