@@ -2,6 +2,7 @@ package com.grusie.presentation.screen.home
 
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -72,6 +73,9 @@ fun HomeScreen(
                     }
 
                     is PolicyListUiState.Success -> {
+                        if(policyList.itemCount <= 0){
+                            viewModel.setPolicyUiState(PolicyListUiState.Empty)
+                        }
                     }
 
                     is PolicyListUiState.Error -> {
@@ -87,6 +91,9 @@ fun HomeScreen(
 
                     is PolicyListUiState.Empty -> {
                         EmptyView()
+                    }
+                    else -> {
+
                     }
                 }
             }

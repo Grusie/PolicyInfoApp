@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.grusie.presentation.R
 import com.grusie.presentation.components.EmptyView
+import com.grusie.presentation.components.Progress
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.uiState.PolicyDetailUiState
 import com.grusie.presentation.util.TextUtils
@@ -62,7 +63,7 @@ fun PolicyDetailScreen(
         }
 
         is PolicyDetailUiState.Loading -> {
-            CircularProgressIndicator()
+            Progress()
         }
 
         is PolicyDetailUiState.Error -> {

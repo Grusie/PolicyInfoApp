@@ -12,6 +12,10 @@ import com.grusie.data.model.PolicyItem
 import com.grusie.data.model.PolicyRemoteKeys
 import com.grusie.data.service.PolicyService
 
+/**
+ * 로컬DB와 연계 되어있는 RemoteMediator
+ **/
+
 @OptIn(ExperimentalPagingApi::class)
 class PolicyRemoteMediator(
     private val policyService: PolicyService,
@@ -49,7 +53,9 @@ class PolicyRemoteMediator(
             }
             Log.d("confirm page", " $page, $loadType")
             val policyList =
-                policyService.getPolicyList(apiKey = BuildConfig.POLICY_API_KEY, page = page)
+                policyService.getPolicyList(
+                    page = page
+                )
             val endOfPaginationReached = policyList.youthPolicy.isNullOrEmpty()
 
             policyInfoDB.withTransaction {
@@ -72,8 +78,8 @@ class PolicyRemoteMediator(
                         nextPage = nextPage
                     )
                 }
-                keys?.let { policyRemoteKeysDao.addPolicyRemoteKeys(policyRemoteKeys = it)}
-                policyList.youthPolicy?.let { policyDao.addPolicyInfo(policyList = it)}
+                keys?.let { policyRemoteKeysDao.addPolicyRemoteKeys(policyRemoteKeys = it) }
+                policyList.youthPolicy?.let { policyDao.addPolicyInfo(policyList = it) }
             }
             Log.d("confirm page success", "$endOfPaginationReached")
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)

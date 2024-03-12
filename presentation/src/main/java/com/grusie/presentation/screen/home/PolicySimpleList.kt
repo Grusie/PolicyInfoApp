@@ -1,9 +1,9 @@
 package com.grusie.presentation.screen.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,17 +14,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,9 +45,10 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.grusie.domain.model.PolicySimple
 import com.grusie.presentation.R
+import com.grusie.presentation.components.LoadStateFooter
 import com.grusie.presentation.navigation.Screen
-import com.grusie.presentation.ui.theme.Gray900
 import com.grusie.presentation.util.TextUtils
+import kotlinx.coroutines.launch
 
 /**
  * 메인 페이지 간단한 정책 정보 컴포넌트들
@@ -55,11 +57,12 @@ import com.grusie.presentation.util.TextUtils
 fun PolicySimpleList(
     policyList: LazyPagingItems<PolicySimple>,
     navController: NavHostController,
-    loading: (Boolean) -> Unit
+    loading: (Boolean) -> Unit = {}
 ) {
-    /*val scrollState = rememberLazyListState()*/
+    val scrollState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     LazyColumn(
-        //state = scrollState,
+        state = scrollState,
         contentPadding = PaddingValues(
             horizontal = dimensionResource(id = R.dimen.margin_default),
             vertical = 4.dp
@@ -72,12 +75,18 @@ fun PolicySimpleList(
                 PolicySimpleItem(policy = policy, navController = navController)
             }
         }
+        Log.d("confirm loadState : ", "${policyList.loadState}")
         when {
-            policyList.loadState.refresh is LoadState.Loading || policyList.loadState.append is LoadState.Loading -> {
+            policyList.loadState.refresh is LoadState.Loading ->{
+                coroutineScope.launch {
+                    scrollState.scrollToItem(0)
+                }
+            }
+            policyList.loadState.append is LoadState.Loading || policyList.loadState.prepend is LoadState.Loading -> {
                 loading(true)
             }
 
-            policyList.loadState.append is LoadState.Error -> {
+            policyList.loadState.append is LoadState.Error || policyList.loadState.prepend is LoadState.Error -> {
                 loading(false)
                 item {
                     LoadStateFooter(
@@ -90,54 +99,7 @@ fun PolicySimpleList(
             else -> loading(false)
         }
     }
-}
 
-@Composable
-fun LoadStateFooter(
-    modifier: Modifier = Modifier,
-    loadState: LoadState,
-    onRetryClick: () -> Unit,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-    ) {
-        if(loadState is LoadState.Error){
-            LoadErrorScreen(onRetryClick = onRetryClick)
-        }
-    }
-}
-
-@Composable
-fun LoadErrorScreen(
-    modifier: Modifier = Modifier,
-    onRetryClick: () -> Unit,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(id = R.string.error_msg),
-                color = Gray900,
-                fontSize = 16.sp,
-                modifier = Modifier.align(Alignment.CenterVertically),
-            )
-            Button(
-                onClick = onRetryClick,
-            ) {
-                Text(text = stringResource(id = R.string.retry))
-            }
-        }
-    }
 }
 
 @Composable

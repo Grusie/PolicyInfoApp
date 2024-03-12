@@ -5,9 +5,9 @@ import com.grusie.data.model.PolicyItem
 import kotlinx.coroutines.flow.Flow
 
 interface PolicyLocalDataSource {
-    fun getPoliciesFromDB(policyId: String): Flow<PolicyItem>
+    fun getPoliciesFromDB(policyId: String): Flow<PolicyItem?>
 }
 
 class PolicyLocalDataSourceImpl(private val policyInfoDao: PolicyInfoDao) : PolicyLocalDataSource {
-    override fun getPoliciesFromDB(policyId: String): Flow<PolicyItem> = policyInfoDao.getPolicy(policyId)
+    override fun getPoliciesFromDB(policyId: String): Flow<PolicyItem?> = policyInfoDao.getPolicy(policyId)
 }

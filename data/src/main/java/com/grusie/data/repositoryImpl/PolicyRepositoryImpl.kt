@@ -1,5 +1,6 @@
 package com.grusie.data.repositoryImpl
 
+import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.grusie.data.model.toPolicyDetail
@@ -9,7 +10,10 @@ import com.grusie.data.source.PolicyRemoteSource
 import com.grusie.domain.model.PolicyDetail
 import com.grusie.domain.model.PolicySimple
 import com.grusie.domain.repository.PolicyRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -25,11 +29,35 @@ class PolicyRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun getSearchPolicyList(
+        query: String?,
+        policyTypeCode: Int?,
+        policyRegionCode: Int?,
+        keyword: String?
+    ): Flow<PagingData<PolicySimple>> =
+        policyRemoteSource.getSearchPolicyList(
+            query = query,
+            policyTypeCode = policyTypeCode,
+            policyRegionCode = policyRegionCode,
+            keyword = keyword
+        ).map { pagingData ->
+            pagingData.map {
+                it.toPolicySimple()
+            }
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getPolicyInfo(
         policyId: String
     ): Flow<PolicyDetail> {
-        return policyLocalDataSource.getPoliciesFromDB(
-            policyId = policyId,
-        ).map { it.toPolicyDetail() }
+        return policyLocalDataSource.getPoliciesFromDB(policyId = policyId)
+            .flatMapConcat { localData ->
+                if(localData != null) {
+                    flow { emit(localData.toPolicyDetail())}
+                } else {
+                    policyRemoteSource.getPolicyInfo(policyId = policyId)
+                        .map { remoteData -> remoteData.toPolicyDetail() }
+                }
+            }
     }
 }

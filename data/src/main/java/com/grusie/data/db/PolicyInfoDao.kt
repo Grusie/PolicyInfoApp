@@ -17,7 +17,7 @@ interface PolicyInfoDao {
     fun getAllPolicies(): PagingSource<Int, PolicyItem>
 
     @Query("SELECT * FROM policyInfo WHERE id = :policyId")
-    fun getPolicy(policyId: String): Flow<PolicyItem>
+    fun getPolicy(policyId: String): Flow<PolicyItem?>
 
     @Query("DELETE FROM policyInfo")
     suspend fun deleteAllPolicies()
