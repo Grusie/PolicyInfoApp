@@ -47,6 +47,7 @@ fun PolicyDetailScreen(
         is PolicyDetailUiState.Success -> {
             val policyDetail = (policyDetailUiState as PolicyDetailUiState.Success).policyDetail
             Scaffold(
+                modifier = modifier,
                 topBar = {
                     PolicyDetailTopBar(
                         navController = navController,

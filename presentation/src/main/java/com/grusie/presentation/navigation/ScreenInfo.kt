@@ -10,4 +10,7 @@ sealed class Screen(val route: String) {
 
     object Scrap : Screen("scrap")
     object Search : Screen("search_screen")
+    object Setting : Screen("setting_screen")
+    object Login : Screen("login_screen")
+    object Signup : Screen("signup_screen")
 }

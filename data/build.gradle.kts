@@ -82,5 +82,10 @@ dependencies {
     //Paging3
     implementation(AndroidX.PAGING)
 
+    //Firebase
+    implementation(platform(Google.FIREBASE_BOM))
+    implementation(Google.FIREBASE_ANALYTICS)
+    implementation(Google.FIREBASE_AUTH)
+
     kapt(Libraries.TIKXML_PROCESSOR)
 }

@@ -26,6 +26,9 @@ object Versions {
     const val COMPOSE_MATERIAL = "1.6.2"
     const val NAVIGATION_ANIMATION = "0.30.0"
     const val COMPOSE_SWIPE = "0.27.0"
+
+    const val FIREBASE_BOM = "32.7.4"
+    const val FIREBASE_AUTH = "7.2.0"
 }
 
 object AndroidX {
@@ -60,6 +63,10 @@ object Google {
     const val GOOGLE_GUAVA_ERROR = "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
     const val NAVIGATION_ANIMATION = "com.google.accompanist:accompanist-navigation-animation:${Versions.NAVIGATION_ANIMATION}"
     const val COMPOSE_SWIPE = "com.google.accompanist:accompanist-swiperefresh:${Versions.COMPOSE_SWIPE}"
+
+    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
+    const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics"
+    const val FIREBASE_AUTH = "com.firebaseui:firebase-ui-auth:${Versions.FIREBASE_AUTH}"
 }
 
 object Libraries {

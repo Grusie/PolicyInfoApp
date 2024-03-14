@@ -54,5 +54,23 @@ class TextUtils {
             Log.e("confirm error : ", "${error.message}")
             return errorMsg
         }
+
+        fun getAlertMsg(context: Context, alertCode: Int): String {
+            val alertMsg = context.getString(
+                when(alertCode) {
+                    Constant.ERROR_CODE_EMPTY -> {
+                        R.string.str_error_msg_empty
+                    }
+                    Constant.ERROR_CODE_FORMAT -> {
+                        R.string.str_error_msg_format
+                    }
+                    else -> {
+                        R.string.str_error_unknown
+                    }
+                }
+            )
+            Log.e("confirm alert : ", "$alertCode")
+            return alertMsg
+        }
     }
 }

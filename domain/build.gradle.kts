@@ -23,6 +23,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -42,4 +47,9 @@ dependencies {
     androidTestImplementation(Test.ESPRESSO_CORE)
     //Paging3
     implementation(AndroidX.PAGING)
+
+    //Firebase
+    implementation(platform(Google.FIREBASE_BOM))
+    implementation(Google.FIREBASE_ANALYTICS)
+    implementation(Google.FIREBASE_AUTH)
 }

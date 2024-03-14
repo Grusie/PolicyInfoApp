@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -92,6 +93,11 @@ dependencies {
 
     //GOOGLE ERROR
     implementation(Google.GOOGLE_GUAVA_ERROR)
+
+    //Firebase
+    implementation(platform(Google.FIREBASE_BOM))
+    implementation(Google.FIREBASE_ANALYTICS)
+    implementation(Google.FIREBASE_AUTH)
 
     kapt(Libraries.TIKXML_PROCESSOR)
 }

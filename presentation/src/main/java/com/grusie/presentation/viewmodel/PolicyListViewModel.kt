@@ -1,12 +1,10 @@
 package com.grusie.presentation.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.grusie.domain.model.PolicySimple
-import com.grusie.domain.usecase.PolicyUseCases
+import com.grusie.domain.usecase.PolicyUseCases.PolicyUseCases
 import com.grusie.presentation.uiState.PolicyListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

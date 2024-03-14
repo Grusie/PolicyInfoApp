@@ -49,6 +49,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.grusie.domain.model.PolicyDetail
 import com.grusie.presentation.R
+import com.grusie.presentation.ui.theme.Blue500
 import com.grusie.presentation.util.Constant
 import com.grusie.presentation.util.TextUtils
 
@@ -271,7 +272,7 @@ fun PolicyHorizontalItem(
                     .align(Alignment.CenterVertically),
                 text = stringResource(id = titleResource)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.margin_default)))
 
             Text(
                 modifier = if (hyperLinkFlag) Modifier
@@ -289,7 +290,7 @@ fun PolicyHorizontalItem(
                 text = TextUtils.replaceEmptyText(content, stringResource(id = R.string.str_none)),
                 style = TextStyle(
                     fontSize = 12.sp,
-                    color = if (hyperLinkFlag) Color.Blue else Color.Gray
+                    color = if (hyperLinkFlag) Blue500 else Color.Gray
                 )
             )
 
@@ -351,7 +352,7 @@ fun PolicyVerticalItem(
                     ),
                     style = TextStyle(
                         fontSize = 12.sp,
-                        color = if (hyperLinkFlag) Color.Blue else Color.Gray
+                        color = if (hyperLinkFlag) Blue500 else Color.Gray
                     )
                 )
             }

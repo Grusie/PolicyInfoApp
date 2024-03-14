@@ -1,10 +1,16 @@
 package com.grusie.policyinfo.di
 
+import com.grusie.domain.repository.EmailAuthRepository
 import com.grusie.domain.repository.PolicyRepository
-import com.grusie.domain.usecase.GetPolicyDetailUseCase
-import com.grusie.domain.usecase.GetPolicyListUseCase
-import com.grusie.domain.usecase.GetSearchPolicyListUseCase
-import com.grusie.domain.usecase.PolicyUseCases
+import com.grusie.domain.usecase.AuthUseCases.AuthUseCases
+import com.grusie.domain.usecase.AuthUseCases.EmailLoginUseCase
+import com.grusie.domain.usecase.AuthUseCases.EmailLogoutUseCase
+import com.grusie.domain.usecase.AuthUseCases.EmailSendUseCase
+import com.grusie.domain.usecase.AuthUseCases.EmailSignUpUseCase
+import com.grusie.domain.usecase.PolicyUseCases.GetPolicyDetailUseCase
+import com.grusie.domain.usecase.PolicyUseCases.GetPolicyListUseCase
+import com.grusie.domain.usecase.PolicyUseCases.GetSearchPolicyListUseCase
+import com.grusie.domain.usecase.PolicyUseCases.PolicyUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +24,13 @@ object UseCaseModule {
         getPolicyDetailUseCase = GetPolicyDetailUseCase(repository),
         getSearchPolicyListUseCase = GetSearchPolicyListUseCase(repository),
         getPolicyListUseCase = GetPolicyListUseCase(repository)
+    )
+
+    @Provides
+    fun provideAuthUseCases(repository: EmailAuthRepository) = AuthUseCases(
+        emailSignUpUseCase = EmailSignUpUseCase(repository),
+        emailLoginUseCase = EmailLoginUseCase(repository),
+        emailLogoutUseCase = EmailLogoutUseCase(repository),
+        emailSendUseCase = EmailSendUseCase(repository)
     )
 }

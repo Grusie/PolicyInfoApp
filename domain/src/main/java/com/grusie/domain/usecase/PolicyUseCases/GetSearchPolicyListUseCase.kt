@@ -1,4 +1,4 @@
-package com.grusie.domain.usecase
+package com.grusie.domain.usecase.PolicyUseCases
 
 import com.grusie.domain.repository.PolicyRepository
 

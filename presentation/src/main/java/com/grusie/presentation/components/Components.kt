@@ -26,9 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import com.grusie.presentation.R
@@ -62,20 +62,8 @@ fun EmptyView(modifier: Modifier = Modifier, query: String? = null) {
 }
 
 @Composable
-fun SearchView(modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        , verticalArrangement = Arrangement.Center
-        , horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Image(painter = painterResource(id = R.drawable.search_icon), contentDescription = "search_icon")
-        Text(text = stringResource(id = R.string.str_write_search), fontSize = 20.sp)
-    }
-}
-
-@Composable
 fun SingleAlertDialog(
-    confirm: Boolean,
+    confirm: Boolean = false,
     title: String,
     content: String,
     confirmCallBack: () -> Unit = {},
@@ -122,7 +110,7 @@ fun LoadErrorScreen(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(dimensionResource(id = R.dimen.margin_default)),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -154,7 +142,7 @@ fun LoadStateFooter(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(dimensionResource(id = R.dimen.margin_default)),
     ) {
         if(loadState is LoadState.Error){
             LoadErrorScreen(onRetryClick = onRetryClick)
@@ -164,7 +152,7 @@ fun LoadStateFooter(
 
 @Composable
 fun ScrollTopBtn(modifier: Modifier = Modifier, onClick: () -> Unit){
-    IconButton(modifier = modifier.padding(8.dp).background(Color.LightGray, shape = CircleShape),onClick = { onClick() }) {
+    IconButton(modifier = modifier.padding(dimensionResource(id = R.dimen.margin_default)).background(Color.LightGray, shape = CircleShape),onClick = { onClick() }) {
         Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "scroll_top_icon")
     }
 }

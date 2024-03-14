@@ -10,4 +10,7 @@ object Constant {
     const val POLICY_KIND_EDU = "023030"
     const val POLICY_KIND_CULTURE = "023040"
     const val POLICY_KIND_PARTICIPATION = "023050"
+
+    const val ERROR_CODE_EMPTY = -1
+    const val ERROR_CODE_FORMAT = -2
 }

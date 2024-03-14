@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.grusie.domain.model.PolicySimple
-import com.grusie.domain.usecase.PolicyUseCases
+import com.grusie.domain.usecase.PolicyUseCases.PolicyUseCases
 import com.grusie.presentation.uiState.PolicySearchUiState
 import com.grusie.presentation.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

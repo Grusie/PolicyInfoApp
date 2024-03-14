@@ -61,7 +61,8 @@ fun HomeScreen(
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)
     var initList by remember { mutableStateOf(false) }
 
-    Scaffold(topBar = { HomeTopBar(navController = navController) }) {
+    Scaffold(modifier = modifier,
+        topBar = { HomeTopBar(navController = navController) }) {
         SwipeRefresh(state = swipeRefreshState, onRefresh = {
             viewModel.loading()
         }, modifier = Modifier.padding(it)) {
