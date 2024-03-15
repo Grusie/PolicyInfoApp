@@ -67,6 +67,7 @@ object Google {
     const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics"
     const val FIREBASE_AUTH = "com.firebaseui:firebase-ui-auth:${Versions.FIREBASE_AUTH}"
+    const val FIREBASE_DYNAIC_LINKS = "com.google.firebase:firebase-dynamic-links-ktx"
 }
 
 object Libraries {

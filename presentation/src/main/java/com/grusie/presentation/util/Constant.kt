@@ -13,4 +13,7 @@ object Constant {
 
     const val ERROR_CODE_EMPTY = -1
     const val ERROR_CODE_FORMAT = -2
+
+    const val PARAM_EMAIL = "email"
+    const val ERROR_EMAIL = "ERROR_EMAIL"
 }

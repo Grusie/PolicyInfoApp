@@ -67,7 +67,7 @@ class SignUpViewModel @Inject constructor(val useCases: AuthUseCases) : BaseView
         return emailRegex.matches(_idText.value)
     }
 
-    private fun setSignUpUiState(state: SignUpUiState) {
+    fun setSignUpUiState(state: SignUpUiState) {
         viewModelScope.launch {
             _signUpUiState.emit(state)
         }

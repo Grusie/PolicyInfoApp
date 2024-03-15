@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +39,7 @@ fun IdTextField(
     idText: String,
     changeIdText: (String) -> Unit = {},
     verifyFlag: Boolean = false,
+    enabled: Boolean = true,
     verifyOnClick: () -> Unit = {}
 ) {
     OutlinedTextField(
@@ -51,16 +54,19 @@ fun IdTextField(
         singleLine = true,
         trailingIcon = {
             if (verifyFlag) {
-                Text(
-                    modifier = Modifier
-                        .clickable {
-                            verifyOnClick()
-                        }
-                        .padding(2.dp),
-                    text = stringResource(id = R.string.str_verified), color = Blue500
-                )
+                if(enabled) {
+                    Text(
+                        modifier = Modifier
+                            .clickable {
+                                verifyOnClick()
+                            }
+                            .padding(2.dp),
+                        text = stringResource(id = R.string.str_verified), color = Blue500
+                    )
+                }
             }
-        }
+        },
+        enabled = enabled
     )
 }
 

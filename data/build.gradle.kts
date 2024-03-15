@@ -17,7 +17,7 @@ android {
         testInstrumentationRunner = AppConfig.TEST_INSTRUMENTATION_RUNNER
         consumerProguardFiles(AppConfig.CONSUMER)
 
-        buildConfigField("String", "POLICY_API_KEY", getApiKey("policy_api_key"))
+        buildConfigField("String", "POLICY_API_KEY", getValueFromLocalProperties("POLICY_API_KEY"))
     }
 
     buildTypes {
@@ -43,8 +43,8 @@ android {
     }
 }
 
-fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+fun getValueFromLocalProperties(key:String): String {
+    return gradleLocalProperties(rootDir).getProperty(key)
 }
 
 dependencies {

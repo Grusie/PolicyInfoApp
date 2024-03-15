@@ -97,4 +97,8 @@ dependencies {
     //Paging3
     implementation(AndroidX.PAGING)
     implementation(AndroidX.PAGING_COMPOSE)
+
+    implementation(platform(Google.FIREBASE_BOM))
+    implementation(Google.FIREBASE_ANALYTICS)
+    implementation(Google.FIREBASE_DYNAIC_LINKS)
 }
