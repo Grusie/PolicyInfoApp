@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.Flow
 interface EmailAuthRepository {
     suspend fun emailSignUp(): Flow<PagingData<PolicySimple>>
 
-    suspend fun emailLogin(
+    suspend fun emailSignIn(
         query: String? = null,
         policyTypeCode: Int? = null,
         policyRegionCode: Int? = null,
         keyword: String? = null
     ): Flow<PagingData<PolicySimple>>
 
-    suspend fun emailLogOut(policyId: String): Flow<PolicyDetail>
+    suspend fun emailSignOut(policyId: String): Flow<PolicyDetail>
 
     suspend fun emailSend(email: String)
 }

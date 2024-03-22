@@ -16,7 +16,6 @@ android {
         consumerProguardFiles(AppConfig.CONSUMER)
 
         buildConfigField("String", "PASSWORD_AES_KEY", getValueFromLocalProperties("PASSWORD_AES_KEY"))
-        buildConfigField("String", "FIREBASE_DYNAMIC_LINK", getValueFromLocalProperties("FIREBASE_DYNAMIC_LINK"))
     }
 
     buildTypes {
@@ -61,5 +60,5 @@ dependencies {
     implementation(platform(Google.FIREBASE_BOM))
     implementation(Google.FIREBASE_ANALYTICS)
     implementation(Google.FIREBASE_AUTH)
-    implementation(Google.FIREBASE_DYNAIC_LINKS)
+    implementation(Google.FIREBASE_DYNAMIC_LINKS)
 }

@@ -13,7 +13,8 @@ object Constant {
 
     const val ERROR_CODE_EMPTY = -1
     const val ERROR_CODE_FORMAT = -2
+    const val ERROR_EMAIL_UNVERIFIED = -3
+    const val ERROR_PASSWORD_FORMAT = -4
 
-    const val PARAM_EMAIL = "email"
-    const val ERROR_EMAIL = "ERROR_EMAIL"
+    const val PARAM_UID = "uid"
 }

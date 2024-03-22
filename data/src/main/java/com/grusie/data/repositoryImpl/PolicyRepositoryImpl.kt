@@ -24,6 +24,7 @@ class PolicyRepositoryImpl @Inject constructor(
     PolicyRepository {
     override suspend fun getPolicyList(): Flow<PagingData<PolicySimple>> =
         policyRemoteSource.getPolicyList().map { pagingData ->
+            Log.d("confirm pagingData : ", "$pagingData")
             pagingData.map {
                 it.toPolicySimple()
             }

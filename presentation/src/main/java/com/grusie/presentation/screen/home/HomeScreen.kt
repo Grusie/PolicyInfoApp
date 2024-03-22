@@ -3,6 +3,8 @@ package com.grusie.presentation.screen.home
 
 import android.os.Build
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,7 +39,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.grusie.presentation.R
 import com.grusie.presentation.components.EmptyView
 import com.grusie.presentation.components.Progress
-import com.grusie.presentation.components.ScrollTopBtn
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.navigation.Screen
 import com.grusie.presentation.uiState.PolicyListUiState
@@ -73,12 +75,12 @@ fun HomeScreen(
             Box {
                 LaunchedEffect(policyList.loadState) {
                     val loadState = policyList.loadState
-                    if (loadState.refresh is LoadState.NotLoading &&
-                        loadState.append is LoadState.NotLoading &&
-                        loadState.prepend is LoadState.NotLoading &&
-                        loadState.source.refresh is LoadState.NotLoading &&
-                        loadState.source.append is LoadState.NotLoading &&
-                        loadState.source.prepend is LoadState.NotLoading
+                    if (loadState.refresh !is LoadState.Loading &&
+                        loadState.append !is LoadState.Loading &&
+                        loadState.prepend !is LoadState.Loading &&
+                        loadState.source.refresh !is LoadState.Loading &&
+                        loadState.source.append !is LoadState.Loading &&
+                        loadState.source.prepend !is LoadState.Loading
                     ) {
                         Log.d(
                             "confirm loadState in HomeScreen : ",
@@ -131,6 +133,7 @@ fun HomeScreen(
                     }
                 }
             }
+
         }
     }
 }

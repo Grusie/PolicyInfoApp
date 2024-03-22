@@ -1,8 +1,8 @@
 package com.grusie.policyinfo.di
 
-import com.grusie.data.repositoryImpl.EmailAuthRepositoryImpl
+import com.grusie.data.repositoryImpl.LocalAuthRepositoryImpl
 import com.grusie.data.repositoryImpl.PolicyRepositoryImpl
-import com.grusie.domain.repository.EmailAuthRepository
+import com.grusie.domain.repository.LocalAuthRepository
 import com.grusie.domain.repository.PolicyRepository
 import dagger.Module
 import dagger.Provides
@@ -15,13 +15,13 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Singleton
     @Provides
-    fun providePolicyRepository(repository: PolicyRepositoryImpl) : PolicyRepository{
+    fun providePolicyRepository(repository: PolicyRepositoryImpl): PolicyRepository {
         return repository
     }
 
     @Singleton
     @Provides
-    fun provideEmailAuthRepository(repository: EmailAuthRepositoryImpl) : EmailAuthRepository {
+    fun provideLocalAuthRepository(repository: LocalAuthRepositoryImpl): LocalAuthRepository {
         return repository
     }
 }

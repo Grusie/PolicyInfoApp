@@ -2,8 +2,9 @@ package com.grusie.presentation
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresExtension
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -15,11 +16,18 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.navigation.BottomNavItem
 import com.grusie.presentation.navigation.BottomNavigationBar
 import com.grusie.presentation.navigation.NavGraph
@@ -46,6 +54,25 @@ class MainActivity : ComponentActivity() {
                     Screen.Scrap.route,
                     Screen.MyPage.route
                 )
+                var exitAppDialogVisibility by remember { mutableStateOf(false) }
+
+                val backDispatcher =
+                    LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
+                if (isBottomNavVisible) {
+                    DisposableEffect(backDispatcher) {
+                        val callback = object : OnBackPressedCallback(true) {
+                            override fun handleOnBackPressed() {
+                                exitAppDialogVisibility = true
+                            }
+                        }
+
+                        backDispatcher?.addCallback(callback)
+                        onDispose {
+                            callback.remove()
+                        }
+                    }
+                }
 
                 Scaffold(
                     bottomBar = {
@@ -74,6 +101,16 @@ class MainActivity : ComponentActivity() {
                                 },
                                 modifier = Modifier.background(Color.Gray)
                             )
+
+                            if(exitAppDialogVisibility) {
+                                SingleAlertDialog(
+                                    confirm = true,
+                                    title = stringResource(id = R.string.str_exit_app_title),
+                                    content = stringResource(id = R.string.str_exit_app_content),
+                                    confirmCallBack = { finish() },
+                                    cancelCallback = { exitAppDialogVisibility = false}
+                                )
+                            }
                         }
                     }
                 ) {

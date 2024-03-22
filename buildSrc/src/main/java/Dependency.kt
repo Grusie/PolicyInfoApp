@@ -29,6 +29,8 @@ object Versions {
 
     const val FIREBASE_BOM = "32.7.4"
     const val FIREBASE_AUTH = "7.2.0"
+
+    const val LOTTIE = "6.4.0"
 }
 
 object AndroidX {
@@ -67,7 +69,7 @@ object Google {
     const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics"
     const val FIREBASE_AUTH = "com.firebaseui:firebase-ui-auth:${Versions.FIREBASE_AUTH}"
-    const val FIREBASE_DYNAIC_LINKS = "com.google.firebase:firebase-dynamic-links-ktx"
+    const val FIREBASE_DYNAMIC_LINKS = "com.google.firebase:firebase-dynamic-links-ktx"
 }
 
 object Libraries {
@@ -85,6 +87,9 @@ object Libraries {
     /* OkHttp */
     const val OKHTTP                     = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
     const val OKHTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
+
+    /* Lottie */
+    const val Lottie = "com.airbnb.android:lottie-compose:${Versions.LOTTIE}"
 }
 
 object Test {

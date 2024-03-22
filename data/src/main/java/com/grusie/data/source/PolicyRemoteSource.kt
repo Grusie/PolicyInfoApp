@@ -5,7 +5,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.grusie.data.db.PolicyInfoDB
+import com.grusie.data.db.policyinfo.PolicyInfoDB
 import com.grusie.data.model.PolicyItem
 import com.grusie.data.paging.PolicyPagingSource
 import com.grusie.data.paging.PolicyRemoteMediator
@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 interface PolicyRemoteSource {

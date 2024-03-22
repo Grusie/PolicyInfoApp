@@ -6,8 +6,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.grusie.data.BuildConfig
-import com.grusie.data.db.PolicyInfoDB
+import com.grusie.data.db.policyinfo.PolicyInfoDB
 import com.grusie.data.model.PolicyItem
 import com.grusie.data.model.PolicyRemoteKeys
 import com.grusie.data.service.PolicyService

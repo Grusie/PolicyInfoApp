@@ -1,10 +1,11 @@
 package com.grusie.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.grusie.domain.model.PolicySimple
-import com.grusie.domain.usecase.PolicyUseCases.PolicyUseCases
+import com.grusie.domain.usecase.policyusecases.PolicyUseCases
 import com.grusie.presentation.uiState.PolicyListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -35,6 +36,7 @@ class PolicyListViewModel @Inject constructor(private val policyUseCases: Policy
             try {
                 policyUseCases.getPolicyListUseCase().cachedIn(viewModelScope)
                     .collect { pagingData ->
+                        Log.d("confirm pagingData : ", "$pagingData")
                         _policyList.emit(pagingData)
                     }
             } catch (e: Exception) {

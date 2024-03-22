@@ -98,7 +98,12 @@ dependencies {
     implementation(AndroidX.PAGING)
     implementation(AndroidX.PAGING_COMPOSE)
 
+    //Firebase
     implementation(platform(Google.FIREBASE_BOM))
     implementation(Google.FIREBASE_ANALYTICS)
-    implementation(Google.FIREBASE_DYNAIC_LINKS)
+    implementation(Google.FIREBASE_AUTH)
+    implementation(Google.FIREBASE_DYNAMIC_LINKS)
+
+    //Lottie
+    implementation(Libraries.Lottie)
 }

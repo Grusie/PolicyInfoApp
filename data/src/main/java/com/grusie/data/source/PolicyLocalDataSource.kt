@@ -1,6 +1,6 @@
 package com.grusie.data.source
 
-import com.grusie.data.db.PolicyInfoDao
+import com.grusie.data.db.policyinfo.PolicyInfoDao
 import com.grusie.data.model.PolicyItem
 import kotlinx.coroutines.flow.Flow
 

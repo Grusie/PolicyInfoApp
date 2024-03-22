@@ -35,7 +35,7 @@ fun MyPageScreen(
             MyProfile(
                 modifier = Modifier.fillMaxWidth(),
                 verified = userInfo.value != null,
-                goToAuthScreen = { navController.navigate(route = Screen.Login.route) }
+                goToAuthScreen = { navController.navigate(route = Screen.SignIn.route) }
             )
         }
     }

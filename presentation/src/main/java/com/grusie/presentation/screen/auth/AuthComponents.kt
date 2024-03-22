@@ -114,7 +114,7 @@ fun AuthTopBar(title: String, goToBack: () -> Unit = {}) {
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "login_back_icon"
+                    contentDescription = "signIn_back_icon"
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.grusie.data.db
+package com.grusie.data.db.policyinfo
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

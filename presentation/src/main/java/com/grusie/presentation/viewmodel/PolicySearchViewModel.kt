@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.grusie.domain.model.PolicySimple
-import com.grusie.domain.usecase.PolicyUseCases.PolicyUseCases
+import com.grusie.domain.usecase.policyusecases.PolicyUseCases
 import com.grusie.presentation.uiState.PolicySearchUiState
 import com.grusie.presentation.util.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel

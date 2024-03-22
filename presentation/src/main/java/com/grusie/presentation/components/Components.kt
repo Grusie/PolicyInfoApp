@@ -51,13 +51,22 @@ fun Progress(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
 
 @Composable
 fun EmptyView(modifier: Modifier = Modifier, query: String? = null) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        , verticalArrangement = Arrangement.Center
-        , horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Image(painter = painterResource(id = R.drawable.empty_box_icon), contentDescription = "empty_list")
-        Text(text = if(query != null) stringResource(id = R.string.str_empty_search_list, query) else stringResource(id = R.string.str_empty_list))
+    Column(
+        modifier = modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.empty_box_icon),
+            contentDescription = "empty_list"
+        )
+        Text(
+            text = if (query != null) stringResource(
+                id = R.string.str_empty_search_list,
+                query
+            ) else stringResource(id = R.string.str_empty_list)
+        )
     }
 }
 
@@ -73,7 +82,10 @@ fun SingleAlertDialog(
 
     if (showDialog.value) {
         AlertDialog(
-            onDismissRequest = { showDialog.value = false },
+            onDismissRequest = {
+                showDialog.value = false
+                cancelCallback()
+            },
             title = { Text(text = title) },
             text = { Text(text = content) },
             confirmButton = {
@@ -144,15 +156,18 @@ fun LoadStateFooter(
             .fillMaxWidth()
             .padding(dimensionResource(id = R.dimen.margin_default)),
     ) {
-        if(loadState is LoadState.Error){
+        if (loadState is LoadState.Error) {
             LoadErrorScreen(onRetryClick = onRetryClick)
         }
     }
 }
 
 @Composable
-fun ScrollTopBtn(modifier: Modifier = Modifier, onClick: () -> Unit){
-    IconButton(modifier = modifier.padding(dimensionResource(id = R.dimen.margin_default)).background(Color.LightGray, shape = CircleShape),onClick = { onClick() }) {
+fun ScrollTopBtn(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    IconButton(
+        modifier = modifier
+            .padding(dimensionResource(id = R.dimen.margin_default))
+            .background(Color.LightGray, shape = CircleShape), onClick = { onClick() }) {
         Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "scroll_top_icon")
     }
 }

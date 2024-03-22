@@ -1,4 +1,4 @@
-package com.grusie.data.db
+package com.grusie.data.db.policyinfo
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

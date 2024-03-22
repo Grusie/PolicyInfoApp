@@ -1,6 +1,9 @@
 package com.grusie.policyinfo.di
 
-import com.grusie.data.db.PolicyInfoDao
+import android.content.SharedPreferences
+import com.grusie.data.db.policyinfo.PolicyInfoDao
+import com.grusie.data.source.LocalAuthSource
+import com.grusie.data.source.LocalAuthSourceImpl
 import com.grusie.data.source.PolicyLocalDataSource
 import com.grusie.data.source.PolicyLocalDataSourceImpl
 import com.grusie.data.source.PolicyRemoteSource
@@ -16,9 +19,17 @@ import javax.inject.Singleton
 object DataSourceModule {
     @Singleton
     @Provides
-    fun providesPolicyRemoteSource(source : PolicyRemoteSourceImpl): PolicyRemoteSource {
+    fun providesPolicyRemoteSource(source: PolicyRemoteSourceImpl): PolicyRemoteSource {
         return source
     }
+
+    @Singleton
     @Provides
-    fun provideLocalDataSource(policyInfoDao: PolicyInfoDao): PolicyLocalDataSource = PolicyLocalDataSourceImpl(policyInfoDao = policyInfoDao)
+    fun provideLocalDataSource(policyInfoDao: PolicyInfoDao): PolicyLocalDataSource =
+        PolicyLocalDataSourceImpl(policyInfoDao = policyInfoDao)
+
+    @Provides
+    @Singleton
+    fun provideLocalAuthSource(sharedPreferences: SharedPreferences): LocalAuthSource =
+        LocalAuthSourceImpl(sharedPreferences = sharedPreferences)
 }

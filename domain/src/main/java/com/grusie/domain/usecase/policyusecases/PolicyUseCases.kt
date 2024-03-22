@@ -1,4 +1,4 @@
-package com.grusie.domain.usecase.PolicyUseCases
+package com.grusie.domain.usecase.policyusecases
 
 data class PolicyUseCases(
     val getPolicyListUseCase: GetPolicyListUseCase,

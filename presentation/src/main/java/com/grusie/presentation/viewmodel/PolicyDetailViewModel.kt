@@ -1,7 +1,7 @@
 package com.grusie.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.grusie.domain.usecase.PolicyUseCases.PolicyUseCases
+import com.grusie.domain.usecase.policyusecases.PolicyUseCases
 import com.grusie.presentation.uiState.PolicyDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
