@@ -96,27 +96,3 @@ fun PasswordTextField(pwText: String, changePwText: (String) -> Unit = {}) {
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation()
     )
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AuthTopBar(title: String, goToBack: () -> Unit = {}) {
-    CenterAlignedTopAppBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = dimensionResource(id = R.dimen.margin_large)),
-        title = {
-
-            Text(text = title, fontWeight = FontWeight.Bold)
-        },
-        navigationIcon = {
-            IconButton(
-                onClick = { goToBack() },
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "signIn_back_icon"
-                )
-            }
-        }
-    )
-}

@@ -17,13 +17,8 @@ class SignInEmailUseCase(
             auth.signInWithEmailAndPassword(id, pw).await()
             val uid = auth.currentUser!!.uid
 
-            localAuthRepository.createLocalAuth(
-                localAuth = LocalAuth(
-                    uid = uid,
-                    id = id,
-                    pw = pw
-                )
-            )
+            val encryptedPassword = Utils.encryptData(pw.toByteArray(Charsets.UTF_8), BuildConfig.PASSWORD_AES_KEY)
+            localAuthRepository.createLocalAuth(LocalAuth(uid = uid, id = id, pw = encryptedPassword))
         } catch (e: Exception) {
             //로그인에 실패 했을 시
             auth.signOut()
@@ -36,7 +31,6 @@ class SignInEmailUseCase(
     suspend operator fun invoke(localAuth: LocalAuth) {
         try {
             val decryptedPassword = Utils.decryptData(localAuth.pw, BuildConfig.PASSWORD_AES_KEY)
-
             auth.signInWithEmailAndPassword(localAuth.id, decryptedPassword).await()
         } catch (e: Exception) {
             Log.e("confirm signInEmail Error : ", "${e.message}")

@@ -23,6 +23,7 @@ class SignUpEmailUseCase(
 
             localAuthRepository.createLocalAuth(LocalAuth(uid = auth.currentUser!!.uid, id = email, pw = encryptedPassword))
         } catch (e: Exception) {
+            auth.currentUser?.delete()?.await()
             Log.e("confirm signUp Error : ", "${e.message}")
             throw e
         }

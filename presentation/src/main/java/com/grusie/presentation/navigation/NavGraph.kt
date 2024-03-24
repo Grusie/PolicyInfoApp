@@ -15,6 +15,7 @@ import com.grusie.presentation.screen.Setting.SettingScreen
 import com.grusie.presentation.screen.auth.SignInScreen
 import com.grusie.presentation.screen.auth.SignUpScreen
 import com.grusie.presentation.screen.home.HomeScreen
+import com.grusie.presentation.screen.manageauth.ManageAuthScreen
 import com.grusie.presentation.screen.mypage.MyPageScreen
 import com.grusie.presentation.screen.policydetail.PolicyDetailScreen
 import com.grusie.presentation.screen.scrap.ScrapScreen
@@ -69,6 +70,10 @@ fun NavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
         }
         composable(route = Screen.Signup.route) {
             SignUpScreen(navController = navController, modifier = Modifier)
+        }
+
+        composable(route = Screen.ManageAuth.route) {
+            ManageAuthScreen(navController = navController, modifier = Modifier)
         }
     }
 }

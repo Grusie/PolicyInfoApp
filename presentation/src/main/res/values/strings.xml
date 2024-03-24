@@ -65,6 +65,7 @@
 
     <string name="str_signIn">SignIn</string>
     <string name="str_go_signIn">로그인하기</string>
+    <string name="str_go_signOut">로그아웃</string>
     <string name="str_go_signup">계정이 없으신가요? 회원가입하기</string>
     <string name="str_signup">회원가입</string>
     <string name="str_find_id">아이디(이메일) 찾기</string>
@@ -83,4 +84,7 @@
 
     <string name="str_exit_app_title">청년정책 앱</string>
     <string name="str_exit_app_content">앱을 종료하시겠습니까?</string>
+
+    <string name="str_success_signIn">로그인에 성공하였습니다.</string>
+    <string name="str_success_signOut">로그아웃 되었습니다.</string>
 </resources>

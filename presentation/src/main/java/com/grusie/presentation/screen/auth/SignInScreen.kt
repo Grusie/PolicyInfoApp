@@ -1,9 +1,12 @@
 package com.grusie.presentation.screen.auth
 
 import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.grusie.presentation.R
+import com.grusie.presentation.components.BackBtnTopBar
 import com.grusie.presentation.components.Progress
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.navigation.Screen
@@ -55,9 +59,11 @@ fun SignInScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            AuthTopBar(title = stringResource(id = R.string.str_signIn), goToBack = { navController.popBackStack() })
+            BackBtnTopBar(
+                title = stringResource(id = R.string.str_signIn),
+                goToBack = { navController.popBackStack() })
         }) { paddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(
@@ -67,47 +73,55 @@ fun SignInScreen(
                 )
                 .fillMaxSize()
         ) {
-            EmailSignIn(
-                idText = idText.value,
-                pwText = pwText.value,
-                changeIdText = { viewModel.changeIdText(it) },
-                changePwText = { viewModel.changePwText(it) },
-                signInBtnOnClick = { viewModel.emailSignIn() },
-            )
+            Column() {
+                EmailSignIn(
+                    idText = idText.value,
+                    pwText = pwText.value,
+                    changeIdText = { viewModel.changeIdText(it) },
+                    changePwText = { viewModel.changePwText(it) },
+                    signInBtnOnClick = { viewModel.emailSignIn() },
+                )
 
-            Spacer(modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.margin_large)))
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                onClick = { navController.navigate(Screen.Signup.route) },
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black,
-                    disabledContainerColor = Color.Gray,
-                    disabledContentColor = Color.White
-                ),
-                border = BorderStroke(width = 1.dp, color = Color.Black),
-                contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.margin_large))
-            ) {
-                Text(text = stringResource(id = R.string.str_go_signup))
+                Spacer(modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.margin_large)))
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = { navController.navigate(Screen.Signup.route) },
+                    shape = CircleShape,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black,
+                        disabledContainerColor = Color.Gray,
+                        disabledContentColor = Color.White
+                    ),
+                    border = BorderStroke(width = 1.dp, color = Color.Black),
+                    contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.margin_large))
+                ) {
+                    Text(text = stringResource(id = R.string.str_go_signup))
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = dimensionResource(id = R.dimen.margin_large))
+                ) {
+
+                    //TODO : 추후 아이디 비밀번호 찾기 추가 예정
+                }
             }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = dimensionResource(id = R.dimen.margin_large))
-            ) {
-
-                //TODO : 추후 아이디 비밀번호 찾기 추가 예정
-            }
-
+            Log.d("confirm signInUiState : ", "$signInUiState")
             when (signInUiState) {
                 is SignInUiState.Loading -> {
+                    Log.d("confirm loading : ", "$signInUiState")
                     Progress()
                 }
 
                 is SignInUiState.SuccessSignIn -> {
+                    Toast.makeText(
+                        context,
+                        stringResource(id = R.string.str_success_signIn),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     navController.popBackStack()
                 }
 
@@ -142,7 +156,7 @@ fun EmailSignIn(
     pwText: String,
     changeIdText: (String) -> Unit = {},
     changePwText: (String) -> Unit = {},
-    signInBtnOnClick: () -> Unit ={}
+    signInBtnOnClick: () -> Unit = {}
 ) {
     IdTextField(idText = idText, changeIdText = changeIdText)
 

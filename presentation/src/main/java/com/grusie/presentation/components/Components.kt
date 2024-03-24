@@ -13,10 +13,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -29,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import com.grusie.presentation.R
@@ -170,5 +174,30 @@ fun ScrollTopBtn(modifier: Modifier = Modifier, onClick: () -> Unit) {
             .background(Color.LightGray, shape = CircleShape), onClick = { onClick() }) {
         Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "scroll_top_icon")
     }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BackBtnTopBar(title: String, goToBack: () -> Unit = {}) {
+    CenterAlignedTopAppBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = dimensionResource(id = R.dimen.margin_large)),
+        title = {
+
+            Text(text = title, fontWeight = FontWeight.Bold)
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = { goToBack() },
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                    contentDescription = "signIn_back_icon"
+                )
+            }
+        }
+    )
 }
 

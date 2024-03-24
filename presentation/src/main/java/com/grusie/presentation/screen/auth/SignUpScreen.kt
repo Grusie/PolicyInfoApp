@@ -36,6 +36,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import com.grusie.presentation.R
+import com.grusie.presentation.components.BackBtnTopBar
 import com.grusie.presentation.components.Progress
 import com.grusie.presentation.components.SingleAlertDialog
 import com.grusie.presentation.ui.theme.Blue500
@@ -58,7 +59,7 @@ fun SignUpScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            AuthTopBar(
+            BackBtnTopBar(
                 title = stringResource(id = R.string.str_signup),
                 goToBack = { navController.popBackStack() })
         }) { paddingValues ->
@@ -212,7 +213,7 @@ fun EmailSignUp(
 fun SignUpScreenPreview() {
     Scaffold(
         topBar = {
-            AuthTopBar(
+            BackBtnTopBar(
                 title = stringResource(id = R.string.str_signup),
                 goToBack = { })
         }) { paddingValues ->

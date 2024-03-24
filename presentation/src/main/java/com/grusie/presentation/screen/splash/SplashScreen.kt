@@ -1,6 +1,8 @@
 package com.grusie.presentation.screen.splash
 
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RawRes
@@ -20,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.Lottie
@@ -51,7 +54,6 @@ fun SplashScreen(
         LottieCompositionSpec.RawRes(resId = R.raw.splash_anim)
     )
     val lottieAnimatable = rememberLottieAnimatable()
-    val currentFrame = composition?.getFrameForProgress(lottieAnimatable.value)
 
     LaunchedEffect(composition) {
         lottieAnimatable.animate(
@@ -88,7 +90,20 @@ fun SplashScreen(
                 }
 
                 is SplashUiState.SuccessSignIn -> {
-                    if (lottieAnimatable.isAtEnd) navController.navigate(Screen.Home.route)
+                    if (lottieAnimatable.isAtEnd) {
+                        if(splashUiState.localAuth != null) {
+                            Toast.makeText(
+                                context,
+                                stringResource(id = R.string.str_success_signIn),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                navController.navigate(Screen.Home.route)
+                            }, Toast.LENGTH_SHORT.toLong())
+                        } else {
+                            navController.navigate(Screen.Home.route)
+                        }
+                    }
                 }
 
                 else -> {

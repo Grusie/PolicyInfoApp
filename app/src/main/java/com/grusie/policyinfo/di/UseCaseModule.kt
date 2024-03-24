@@ -47,6 +47,7 @@ object UseCaseModule {
                     auth = firebaseAuth
                 ),
                 signOutEmailUseCase = SignOutEmailUseCase(
+                    localAuthRepository = localAuthRepository,
                     auth = firebaseAuth
                 ),
                 sendEmailUseCase = SendEmailUseCase(auth = firebaseAuth),
