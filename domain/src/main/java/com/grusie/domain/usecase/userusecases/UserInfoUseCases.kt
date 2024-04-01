@@ -1,8 +1,6 @@
 package com.grusie.domain.usecase.userusecases
 
-import com.grusie.domain.repository.UserInfoRepository
-
-data class UserUseCases(
+data class UserInfoUseCases(
     val createUserInfoUseCase: CreateUserInfoUseCase,
     val updateUserInfoUseCase: UpdateUserInfoUseCase,
     val deleteUserInfoUseCase: DeleteUserInfoUseCase,

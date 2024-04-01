@@ -2,8 +2,10 @@ package com.grusie.policyinfo.di
 
 import com.grusie.data.repositoryImpl.LocalAuthRepositoryImpl
 import com.grusie.data.repositoryImpl.PolicyRepositoryImpl
+import com.grusie.data.repositoryImpl.UserInfoRepositoryImpl
 import com.grusie.domain.repository.LocalAuthRepository
 import com.grusie.domain.repository.PolicyRepository
+import com.grusie.domain.repository.UserInfoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +24,12 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideLocalAuthRepository(repository: LocalAuthRepositoryImpl): LocalAuthRepository {
+        return repository
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserInfoRepository(repository: UserInfoRepositoryImpl): UserInfoRepository {
         return repository
     }
 }

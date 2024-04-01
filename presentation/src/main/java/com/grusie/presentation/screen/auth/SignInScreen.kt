@@ -20,10 +20,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +41,7 @@ import com.grusie.presentation.R
 import com.grusie.presentation.components.BackBtnTopBar
 import com.grusie.presentation.components.Progress
 import com.grusie.presentation.components.SingleAlertDialog
+import com.grusie.presentation.eventState.SignInEventState
 import com.grusie.presentation.navigation.Screen
 import com.grusie.presentation.uiState.SignInUiState
 import com.grusie.presentation.util.TextUtils
@@ -44,7 +51,6 @@ import com.grusie.presentation.viewmodel.SignInViewModel
  * 로그인 스크린 (로그인 or 회원가입 이동)
  **/
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(
     navController: NavHostController,
@@ -55,6 +61,26 @@ fun SignInScreen(
     val pwText = viewModel.pwText.collectAsState()
     val signInUiState = viewModel.signInUiState.collectAsState().value
     val context = LocalContext.current
+    var alertCode: Int? by remember { mutableStateOf(null) }
+    var errorCode: Exception? by remember { mutableStateOf(null) }
+
+    LaunchedEffect(Unit) {
+        viewModel.signInEventState.collect { signInEventStateValue ->
+            when (signInEventStateValue) {
+                is SignInEventState.Alert -> {
+                    alertCode = signInEventStateValue.alert
+                }
+
+                is SignInEventState.Error -> {
+                    errorCode = signInEventStateValue.error
+                }
+
+                else -> {
+
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -125,25 +151,27 @@ fun SignInScreen(
                     navController.popBackStack()
                 }
 
-                is SignInUiState.Error -> {
-                    SingleAlertDialog(
-                        confirm = false,
-                        title = stringResource(id = R.string.str_title_error),
-                        content = TextUtils.getErrorMsg(
-                            context,
-                            signInUiState.error
-                        )
-                    )
-                }
-
-                is SignInUiState.Alert -> {
-                    SingleAlertDialog(
-                        title = stringResource(id = R.string.str_title_error),
-                        content = TextUtils.getAlertMsg(context, signInUiState.alert)
-                    )
-                }
-
                 else -> {}
+            }
+
+            if (errorCode != null) {
+                SingleAlertDialog(
+                    confirm = false,
+                    title = stringResource(id = R.string.str_title_error),
+                    content = TextUtils.getErrorMsg(context, error = errorCode!!),
+                    onDismissRequest = {
+                        errorCode = null
+                    }
+                )
+            }
+            if (alertCode != null) {
+                SingleAlertDialog(
+                    title = stringResource(id = R.string.str_title_error),
+                    content = TextUtils.getAlertMsg(context, alertCode!!),
+                    onDismissRequest = {
+                        alertCode = null
+                    }
+                )
             }
         }
     }

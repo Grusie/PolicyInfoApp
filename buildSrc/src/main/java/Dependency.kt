@@ -47,6 +47,8 @@ object AndroidX {
     const val PAGING = "androidx.paging:paging-common:${Versions.PAGING}"
     const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}"
     const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE_MATERIAL}"
+
+    const val COMPOSE_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.LIFECYCLE_RUNTIME}"
 }
 
 object KTX {
@@ -70,6 +72,7 @@ object Google {
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics"
     const val FIREBASE_AUTH = "com.firebaseui:firebase-ui-auth:${Versions.FIREBASE_AUTH}"
     const val FIREBASE_DYNAMIC_LINKS = "com.google.firebase:firebase-dynamic-links-ktx"
+    const val FIREBASE_FIRESTORE = "com.google.firebase:firebase-firestore"
 }
 
 object Libraries {

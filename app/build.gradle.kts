@@ -99,5 +99,7 @@ dependencies {
     implementation(Google.FIREBASE_ANALYTICS)
     implementation(Google.FIREBASE_AUTH)
 
+    implementation(Google.FIREBASE_FIRESTORE)
+
     kapt(Libraries.TIKXML_PROCESSOR)
 }

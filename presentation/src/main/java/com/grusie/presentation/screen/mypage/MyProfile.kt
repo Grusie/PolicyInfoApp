@@ -1,6 +1,5 @@
 package com.grusie.presentation.screen.mypage
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +19,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.grusie.domain.model.UserInfo
 import com.grusie.presentation.R
 
@@ -30,7 +27,12 @@ import com.grusie.presentation.R
  * - 로그인 인증 및 회원정보
  **/
 @Composable
-fun MyProfile(modifier: Modifier = Modifier, userInfo: UserInfo?, goToManageAuthScreen: () -> Unit = {},goToAuthScreen: () -> Unit = {}) {
+fun MyProfile(
+    modifier: Modifier = Modifier,
+    userInfo: UserInfo?,
+    goToManageAuthScreen: () -> Unit = {},
+    goToAuthScreen: () -> Unit = {}
+) {
     Spacer(modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.margin_large)))
     if (userInfo != null) Verified(
         modifier = modifier,
@@ -92,7 +94,12 @@ fun Verified(modifier: Modifier = Modifier, userInfo: UserInfo, goToManageAuth: 
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = stringResource(id = R.string.str_nickname, userInfo.nickName),
+            text = if (userInfo.nickname.isNotEmpty()) stringResource(
+                id = R.string.str_nickname,
+                userInfo.nickname
+            ) else stringResource(
+                id = R.string.str_nickname_empty
+            ),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             maxLines = 1
@@ -133,5 +140,5 @@ fun UnVerifiedPreview() {
     widthDp = 360
 )
 fun VerifiedPreview() {
-    Verified(userInfo = UserInfo(nickName = "닉네임입니다."))
+    Verified(userInfo = UserInfo(nickname = "닉네임입니다."))
 }*/

@@ -1,13 +1,13 @@
 package com.grusie.policyinfo.di
 
-import android.content.SharedPreferences
-import com.grusie.data.db.policyinfo.PolicyInfoDao
 import com.grusie.data.source.LocalAuthSource
 import com.grusie.data.source.LocalAuthSourceImpl
 import com.grusie.data.source.PolicyLocalDataSource
 import com.grusie.data.source.PolicyLocalDataSourceImpl
 import com.grusie.data.source.PolicyRemoteSource
 import com.grusie.data.source.PolicyRemoteSourceImpl
+import com.grusie.data.source.UserInfoSource
+import com.grusie.data.source.UserInfoSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,11 +25,19 @@ object DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideLocalDataSource(policyInfoDao: PolicyInfoDao): PolicyLocalDataSource =
-        PolicyLocalDataSourceImpl(policyInfoDao = policyInfoDao)
+    fun provideLocalDataSource(source: PolicyLocalDataSourceImpl): PolicyLocalDataSource {
+        return source
+    }
 
     @Provides
     @Singleton
-    fun provideLocalAuthSource(sharedPreferences: SharedPreferences): LocalAuthSource =
-        LocalAuthSourceImpl(sharedPreferences = sharedPreferences)
+    fun provideLocalAuthSource(source: LocalAuthSourceImpl): LocalAuthSource {
+        return source
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserInfoSource(source: UserInfoSourceImpl): UserInfoSource {
+        return source
+    }
 }

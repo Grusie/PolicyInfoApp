@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
                                     title = stringResource(id = R.string.str_exit_app_title),
                                     content = stringResource(id = R.string.str_exit_app_content),
                                     confirmCallBack = { finish() },
-                                    cancelCallback = { exitAppDialogVisibility = false}
+                                    onDismissRequest = { exitAppDialogVisibility = false}
                                 )
                             }
                         }

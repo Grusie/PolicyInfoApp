@@ -80,7 +80,7 @@ fun SingleAlertDialog(
     title: String,
     content: String,
     confirmCallBack: () -> Unit = {},
-    cancelCallback: () -> Unit = {}
+    onDismissRequest: () -> Unit = {}
 ) {
     val showDialog = remember { mutableStateOf(true) }
 
@@ -88,7 +88,7 @@ fun SingleAlertDialog(
         AlertDialog(
             onDismissRequest = {
                 showDialog.value = false
-                cancelCallback()
+                onDismissRequest()
             },
             title = { Text(text = title) },
             text = { Text(text = content) },
@@ -97,6 +97,7 @@ fun SingleAlertDialog(
                     onClick = {
                         showDialog.value = false
                         confirmCallBack()
+                        onDismissRequest()
                         // 확인 동작
                     }) {
                     Text(stringResource(id = R.string.str_confirm))
@@ -107,7 +108,7 @@ fun SingleAlertDialog(
                     Button(
                         onClick = {
                             showDialog.value = false
-                            cancelCallback()
+                            onDismissRequest()
                             // 취소 동작
                         }) {
                         Text(stringResource(id = R.string.str_cancel))

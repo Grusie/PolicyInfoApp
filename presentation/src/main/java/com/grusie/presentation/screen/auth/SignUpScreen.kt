@@ -1,6 +1,7 @@
 package com.grusie.presentation.screen.auth
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +20,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +43,8 @@ import com.grusie.presentation.R
 import com.grusie.presentation.components.BackBtnTopBar
 import com.grusie.presentation.components.Progress
 import com.grusie.presentation.components.SingleAlertDialog
+import com.grusie.presentation.eventState.SignUpEventState
+import com.grusie.presentation.navigation.Screen
 import com.grusie.presentation.ui.theme.Blue500
 import com.grusie.presentation.uiState.SignUpUiState
 import com.grusie.presentation.util.TextUtils
@@ -49,7 +55,6 @@ import kotlinx.coroutines.launch
  * 회원가입 스크린
  **/
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
     navController: NavHostController,
@@ -68,8 +73,28 @@ fun SignUpScreen(
         val verifyChecked = viewModel.verifyChecked.collectAsState().value
         val signUpUiState = viewModel.signUpUiState.collectAsState().value
         val context = LocalContext.current
+        var alertCode: Int? by remember { mutableStateOf(null) }
+        var errorCode: Exception? by remember { mutableStateOf(null) }
 
         val lifecycleOwner = LocalLifecycleOwner.current
+
+        LaunchedEffect(Unit) {
+            viewModel.signUpEventState.collect { signUpEventStateValue ->
+                when (signUpEventStateValue) {
+                    is SignUpEventState.Alert -> {
+                        alertCode = signUpEventStateValue.alert
+                    }
+
+                    is SignUpEventState.Error -> {
+                        errorCode = signUpEventStateValue.error
+                    }
+
+                    else -> {
+
+                    }
+                }
+            }
+        }
         LaunchedEffect(true) {
             lifecycleOwner.lifecycleScope.launch {
                 lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -100,38 +125,37 @@ fun SignUpScreen(
                 emailRetry = { viewModel.changeVerifyChecked(null) }
             )
 
+            Log.d("confirm signUpUiState :", "$signUpUiState")
             when (signUpUiState) {
                 is SignUpUiState.Loading -> {
                     Progress()
                 }
 
-                is SignUpUiState.SuccessSendEmail -> {
-
-                }
-
                 is SignUpUiState.SuccessSignUp -> {
-                    navController.popBackStack()
-                }
-
-                is SignUpUiState.Error -> {
-                    SingleAlertDialog(
-                        confirm = false,
-                        title = stringResource(id = R.string.str_title_error),
-                        content = TextUtils.getErrorMsg(
-                            context,
-                            signUpUiState.error
-                        )
-                    )
-                }
-
-                is SignUpUiState.Alert -> {
-                    SingleAlertDialog(
-                        title = stringResource(id = R.string.str_title_error),
-                        content = TextUtils.getAlertMsg(context, signUpUiState.alert)
-                    )
+                    navController.navigate(Screen.MyPage.route)
                 }
 
                 else -> {}
+            }
+
+            if (errorCode != null) {
+                SingleAlertDialog(
+                    confirm = false,
+                    title = stringResource(id = R.string.str_title_error),
+                    content = TextUtils.getErrorMsg(context, error = errorCode!!),
+                    onDismissRequest = {
+                        errorCode = null
+                    }
+                )
+            }
+            if (alertCode != null) {
+                SingleAlertDialog(
+                    title = stringResource(id = R.string.str_title_error),
+                    content = TextUtils.getAlertMsg(context, alertCode!!),
+                    onDismissRequest = {
+                        alertCode = null
+                    }
+                )
             }
         }
     }
@@ -215,7 +239,8 @@ fun SignUpScreenPreview() {
         topBar = {
             BackBtnTopBar(
                 title = stringResource(id = R.string.str_signup),
-                goToBack = { })
+                goToBack = { }
+            )
         }) { paddingValues ->
         Column(
             modifier = Modifier

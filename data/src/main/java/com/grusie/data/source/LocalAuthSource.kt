@@ -1,12 +1,12 @@
 package com.grusie.data.source
 
 import android.content.SharedPreferences
-import android.provider.Contacts.SettingsColumns.KEY
 import android.util.Log
 import com.grusie.data.model.LocalAuthData
 import com.grusie.domain.model.LocalAuth
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 interface LocalAuthSource {
     suspend fun createLocalAuth(localAuth: LocalAuth)
@@ -14,7 +14,8 @@ interface LocalAuthSource {
     suspend fun deleteLocalAuth()
 }
 
-class LocalAuthSourceImpl(private val sharedPreferences: SharedPreferences) : LocalAuthSource {
+class LocalAuthSourceImpl @Inject constructor(private val sharedPreferences: SharedPreferences) :
+    LocalAuthSource {
     companion object {
         private const val KEY_UID = "uid"
         private const val KEY_ID = "id"
