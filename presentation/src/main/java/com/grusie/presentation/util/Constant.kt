@@ -2,6 +2,7 @@ package com.grusie.presentation.util
 
 object Constant {
     const val POLICY_DETAIL_KEY = "policyId"
+    const val USER_DETAIL_KEY = "uid"
     const val STRING_LIMITED = 30
     const val SEARCH_TIME_DELAY = 500L
 

@@ -1,6 +1,7 @@
 package com.grusie.policyinfo.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.grusie.domain.repository.FavoritePolicyRepository
 import com.grusie.domain.repository.LocalAuthRepository
 import com.grusie.domain.repository.PolicyRepository
 import com.grusie.domain.repository.UserInfoRepository
@@ -16,6 +17,7 @@ import com.grusie.domain.usecase.authusecases.local.CreateLocalAuthUseCase
 import com.grusie.domain.usecase.authusecases.local.DeleteLocalAuthUseCase
 import com.grusie.domain.usecase.authusecases.local.GetLocalAuthUseCase
 import com.grusie.domain.usecase.authusecases.local.LocalAuthUseCases
+import com.grusie.domain.usecase.policyusecases.GetFavoritePolicyUseCase
 import com.grusie.domain.usecase.policyusecases.GetPolicyDetailUseCase
 import com.grusie.domain.usecase.policyusecases.GetPolicyListUseCase
 import com.grusie.domain.usecase.policyusecases.GetSearchPolicyListUseCase
@@ -34,10 +36,11 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 object UseCaseModule {
     @Provides
-    fun providePolicyUseCases(repository: PolicyRepository) = PolicyUseCases(
-        getPolicyDetailUseCase = GetPolicyDetailUseCase(repository),
-        getSearchPolicyListUseCase = GetSearchPolicyListUseCase(repository),
-        getPolicyListUseCase = GetPolicyListUseCase(repository)
+    fun providePolicyUseCases(localAuthRepository: LocalAuthRepository ,policyRepository: PolicyRepository, favoritePolicyRepository: FavoritePolicyRepository) = PolicyUseCases(
+        getPolicyDetailUseCase = GetPolicyDetailUseCase(policyRepository),
+        getSearchPolicyListUseCase = GetSearchPolicyListUseCase(policyRepository),
+        getPolicyListUseCase = GetPolicyListUseCase(policyRepository),
+        getFavoritePolicyListUseCase = GetFavoritePolicyUseCase(localAuthRepository, policyRepository, favoritePolicyRepository)
     )
 
     @Provides

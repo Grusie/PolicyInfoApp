@@ -65,6 +65,9 @@ fun SignUpScreen(
         modifier = modifier,
         topBar = {
             BackBtnTopBar(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimensionResource(id = R.dimen.margin_large)),
                 title = stringResource(id = R.string.str_signup),
                 goToBack = { navController.popBackStack() })
         }) { paddingValues ->
@@ -238,6 +241,9 @@ fun SignUpScreenPreview() {
     Scaffold(
         topBar = {
             BackBtnTopBar(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimensionResource(id = R.dimen.margin_large)),
                 title = stringResource(id = R.string.str_signup),
                 goToBack = { }
             )

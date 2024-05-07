@@ -63,7 +63,8 @@ fun SearchScreen(
         .fillMaxSize()
         .pointerInput(Unit) {
             detectTapGestures(onPress = { focusManager.clearFocus() })
-        }) {
+        }
+    ) {
         Column(modifier = modifier.padding(it)) {
             SearchBar(
                 finish = { navController.popBackStack() },

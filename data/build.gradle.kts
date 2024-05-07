@@ -90,4 +90,7 @@ dependencies {
     implementation(Google.FIREBASE_FIRESTORE)
 
     kapt(Libraries.TIKXML_PROCESSOR)
+
+    testImplementation(Test.COROUTINE_TEST)
+    testImplementation(Test.HILT_ANDROID_TEST)
 }

@@ -2,6 +2,7 @@ package com.grusie.presentation
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -24,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -102,13 +104,13 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.background(Color.Gray)
                             )
 
-                            if(exitAppDialogVisibility) {
+                            if (exitAppDialogVisibility) {
                                 SingleAlertDialog(
                                     confirm = true,
                                     title = stringResource(id = R.string.str_exit_app_title),
                                     content = stringResource(id = R.string.str_exit_app_content),
                                     confirmCallBack = { finish() },
-                                    onDismissRequest = { exitAppDialogVisibility = false}
+                                    onDismissRequest = { exitAppDialogVisibility = false }
                                 )
                             }
                         }

@@ -19,25 +19,25 @@ interface UserInfoSource {
 
 class UserInfoSourceImpl @Inject constructor(private val fireStore: FirebaseFirestore) :
     UserInfoSource {
+        companion object {
+            const val USER_DOCUMENT = "users"
+        }
     override suspend fun getUserInfo(uid: String): Flow<UserInfoData?> {
         return flow {
-            val myData = fireStore.collection("users").document(uid).get().await()
-            Log.d("confirm getUserInfo myData : ", "$myData")
+            val myData = fireStore.collection(USER_DOCUMENT).document(uid).get().await()
             emit(myData.toObject<UserInfoData>())
-            Log.d("confirm getUserInfo2 myData : ", "${myData.toObject<UserInfoData>()}")
         }
     }
 
     override suspend fun deleteUserInfo(userInfo: UserInfo) {
-        fireStore.collection("users").document(userInfo.uid).delete().await()
+        fireStore.collection(USER_DOCUMENT).document(userInfo.uid).delete().await()
     }
 
     override suspend fun updateUserInfo(userInfo: UserInfo) {
-        fireStore.collection("users").document(userInfo.uid).set(userInfo).await()
+        fireStore.collection(USER_DOCUMENT).document(userInfo.uid).set(userInfo).await()
     }
 
     override suspend fun createUserInfo(userInfo: UserInfo) {
-        fireStore.collection("users").document(userInfo.uid).set(userInfo)
-        Log.d("confirm userInfoData : ", "$userInfo")
+        fireStore.collection(USER_DOCUMENT).document(userInfo.uid).set(userInfo).await()
     }
 }

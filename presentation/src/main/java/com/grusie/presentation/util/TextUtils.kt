@@ -78,7 +78,7 @@ class TextUtils {
                     else -> R.string.str_error_unknown
                 }
             )
-            Log.e("confirm error : ", "${error.message}")
+            Log.e("confirm error : ", "${error.message}, $errorMsg")
             return errorMsg
         }
 
@@ -102,7 +102,7 @@ class TextUtils {
                     }
                 }
             )
-            Log.e("confirm alert : ", "$alertCode")
+            Log.e("confirm alert : ", "$alertCode, $alertMsg")
             return alertMsg
         }
     }

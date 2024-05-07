@@ -29,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -86,6 +85,9 @@ fun SignInScreen(
         modifier = modifier,
         topBar = {
             BackBtnTopBar(
+                modifier= Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimensionResource(id = R.dimen.margin_large)),
                 title = stringResource(id = R.string.str_signIn),
                 goToBack = { navController.popBackStack() })
         }) { paddingValues ->
@@ -195,6 +197,7 @@ fun EmailSignIn(
     Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.margin_default)))
 
     Button(
+        onClick = { signInBtnOnClick() },
         modifier = Modifier
             .background(Color.Black)
             .fillMaxWidth(),
@@ -203,8 +206,7 @@ fun EmailSignIn(
             contentColor = Color.White,
             disabledContainerColor = Color.Gray,
             disabledContentColor = Color.White
-        ),
-        onClick = { signInBtnOnClick() }
+        )
     ) {
         Text(text = stringResource(id = R.string.str_go_signIn), color = Color.White)
     }

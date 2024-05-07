@@ -31,6 +31,7 @@ object Versions {
     const val FIREBASE_AUTH = "7.2.0"
 
     const val LOTTIE = "6.4.0"
+    const val COROUTINE_TEST = "1.8.1-Beta"
 }
 
 object AndroidX {
@@ -99,5 +100,7 @@ object Test {
     const val JUNIT         = "junit:junit:${Versions.JUNIT}"
     const val ANDROID_JUNIT = "androidx.test.ext:junit:${Versions.ANDROID_JUNIT}"
     const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:${Versions.ESPRESSO_CORE}"
+    const val COROUTINE_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINE_TEST}"
+    const val HILT_ANDROID_TEST = "com.google.dagger:hilt-android-testing:${Versions.HILT}"
 }
 

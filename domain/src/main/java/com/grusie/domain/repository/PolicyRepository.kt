@@ -16,4 +16,6 @@ interface PolicyRepository {
     ): Flow<PagingData<PolicySimple>>
 
     suspend fun getPolicyInfo(policyId: String): Flow<PolicyDetail>
+
+    suspend fun getFavoritePolicyList(idList: List<String>) : Flow<PagingData<PolicySimple>>
 }

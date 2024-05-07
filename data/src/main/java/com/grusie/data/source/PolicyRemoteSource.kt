@@ -1,12 +1,12 @@
 package com.grusie.data.source
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.grusie.data.db.policyinfo.PolicyInfoDB
 import com.grusie.data.model.PolicyItem
+import com.grusie.data.paging.FavoritePagingSource
 import com.grusie.data.paging.PolicyPagingSource
 import com.grusie.data.paging.PolicyRemoteMediator
 import com.grusie.data.service.PolicyService
@@ -25,7 +25,8 @@ interface PolicyRemoteSource {
         keyword: String?
     ): Flow<PagingData<PolicyItem>>
 
-    suspend fun getPolicyInfo(policyId: String?) : Flow<PolicyItem>
+    suspend fun getFavoritePolicyList(idList: List<String>): Flow<PagingData<PolicyItem>>
+    suspend fun getPolicyInfo(policyId: String?): Flow<PolicyItem>
 }
 
 class PolicyRemoteSourceImpl @Inject constructor(
@@ -61,6 +62,21 @@ class PolicyRemoteSourceImpl @Inject constructor(
                 policyTypeCode = policyTypeCode,
                 policyRegionCode = policyRegionCode,
                 keyword = keyword
+            )
+        }
+        return Pager(
+            config = PagingConfig(pageSize = 10, initialLoadSize = 10),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+            .flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getFavoritePolicyList(idList: List<String>): Flow<PagingData<PolicyItem>> {
+        val pagingSourceFactory = {
+            FavoritePagingSource(
+                policyService = policyService,
+                policyInfoDao = policyInfoDao,
+                idList = idList
             )
         }
         return Pager(

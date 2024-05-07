@@ -180,11 +180,9 @@ fun ScrollTopBtn(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BackBtnTopBar(title: String, goToBack: () -> Unit = {}) {
+fun BackBtnTopBar(modifier: Modifier = Modifier, title: String, goToBack: () -> Unit = {}) {
     CenterAlignedTopAppBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = dimensionResource(id = R.dimen.margin_large)),
+        modifier = modifier,
         title = {
 
             Text(text = title, fontWeight = FontWeight.Bold)

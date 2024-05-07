@@ -1,5 +1,7 @@
 package com.grusie.policyinfo.di
 
+import com.grusie.data.source.FavoritePolicySource
+import com.grusie.data.source.FavoritePolicySourceImpl
 import com.grusie.data.source.LocalAuthSource
 import com.grusie.data.source.LocalAuthSourceImpl
 import com.grusie.data.source.PolicyLocalDataSource
@@ -38,6 +40,12 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideUserInfoSource(source: UserInfoSourceImpl): UserInfoSource {
+        return source
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteDataSource(source: FavoritePolicySourceImpl) : FavoritePolicySource {
         return source
     }
 }

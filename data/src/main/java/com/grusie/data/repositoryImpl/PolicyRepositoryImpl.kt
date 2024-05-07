@@ -53,12 +53,20 @@ class PolicyRepositoryImpl @Inject constructor(
     ): Flow<PolicyDetail> {
         return policyLocalDataSource.getPoliciesFromDB(policyId = policyId)
             .flatMapConcat { localData ->
-                if(localData != null) {
-                    flow { emit(localData.toPolicyDetail())}
+                if (localData != null) {
+                    flow { emit(localData.toPolicyDetail()) }
                 } else {
                     policyRemoteSource.getPolicyInfo(policyId = policyId)
                         .map { remoteData -> remoteData.toPolicyDetail() }
                 }
             }
+    }
+
+    override suspend fun getFavoritePolicyList(idList: List<String>): Flow<PagingData<PolicySimple>> {
+        return policyRemoteSource.getFavoritePolicyList(idList).map { pagingData ->
+            pagingData.map {
+                it.toPolicySimple()
+            }
+        }
     }
 }

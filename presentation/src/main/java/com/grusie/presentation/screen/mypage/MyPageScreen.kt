@@ -88,8 +88,13 @@ fun MyPageScreen(
                 MyProfile(
                     modifier = Modifier.fillMaxWidth(),
                     userInfo = userInfo,
-                    goToManageAuthScreen = { navController.navigate(route = Screen.ManageAuth.route) },
-                    goToAuthScreen = { navController.navigate(route = Screen.SignIn.route) }
+                    goToManageAuthScreen = { navController.navigate(route = Screen.ManageAuth.route){
+                        popUpTo(Screen.MyPage.route){
+                            saveState = true
+                        }
+                        restoreState = true
+                    } },
+                    goToAuthScreen = { navController.navigate(route = Screen.SignIn.route)}
                 )
             }
             if (errorCode != null) {
